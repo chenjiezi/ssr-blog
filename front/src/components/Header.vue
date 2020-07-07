@@ -15,6 +15,10 @@
 <style lang="stylus" module="header">
 @import '../assets/css/variable.styl'
 .header
+  position fixed
+  top 0
+  left 0
+  right 0
   height 65px
   border-bottom 1px solid #ccc
   font-size $font-size-middle
