@@ -18,7 +18,7 @@ export default {
 </script>
 
 <style lang="stylus">
-// TODO: 为什么还要在引入 variable 样式文件
+// TODO: 在每个组件里，引入 variable.styl 很麻烦。找个全局引入 variable.styl 的方案
 @import '../assets/css/variable.styl'
 .container
   overflow hidden
@@ -26,5 +26,5 @@ export default {
   min-width 320px
   margin 0 auto
   padding $space-middle
-  background rgba(0,0,0,.04)
+  padding-right $space-middle-b
 </style>

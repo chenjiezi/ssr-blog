@@ -30,7 +30,6 @@
     display flex
     justify-content space-between
     align-items center
-    background rgba(0,0,0,.05)
     padding 0 $space-middle
     .navBar
       & > *
