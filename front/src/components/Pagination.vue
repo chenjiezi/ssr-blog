@@ -6,7 +6,15 @@
 
 <script>
 export default {
-  
+  props: {
+    pageParams: {
+      type: Object,
+      require: false,
+      default: () => {
+        return {}
+      }
+    }
+  }
 }
 </script>
 

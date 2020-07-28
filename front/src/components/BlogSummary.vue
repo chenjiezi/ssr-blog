@@ -13,7 +13,7 @@
       <div :class="blogSummary.enter" @click="articleDetail(article)">阅读全文 &gt; </div>
     </article>
     <!-- 分页组件 -->
-    <pagination />
+    <pagination :pageParams="pageParams"></pagination>
   </section>
 </template>
 
@@ -26,24 +26,33 @@
     components: {
       Pagination
     },
+    props: {
+      articleList: {
+        type: Array,
+        require: false,
+        default: () => {
+          return []
+        }
+      },
+      pageParams: {
+        type: Object,
+        require: false,
+        default: () => {
+          return {}
+        }
+      },
+    },
     data () {
       return { }
     },
     computed: {
-      ...mapState([
-        'articleList'
-      ])
+      // ...mapState([
+      //   'articleList'
+      // ])
     },
-    mounted () {
-      console.log('articleList：', this.articleList)
-      // vueEvent.$on('get-article', (tags) => {
-      //   console.log('BlogSummary：', tags)
-      // })
-    }, 
+    mounted () { }, 
     methods: {
-      articleDetail (article) {
-        // console.log('article：', article)
-      }
+      articleDetail (article) { }
     }
   }
 </script>

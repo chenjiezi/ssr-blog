@@ -19,17 +19,22 @@ import vueEvent from './vueEvent.js'
 import { mapActions, mapState } from 'vuex'
 
 export default {
+  props: {
+    tagList: {
+      type: Array,
+      require: false,
+      default: () => {
+        return []
+      }
+    }
+  },
   data () {
     return {
       prevTag: [],
-      tagList: [],
     }
   },
   mounted () {
-    this.FETCH_TAG_LIST().then((data) => {
-      this.tagList = data
-      this.getArticle(this.tagList[0])
-    })
+    this.getArticle(this.tagList[0])
   },
   computed: {
     ...mapState([
@@ -42,16 +47,10 @@ export default {
       'FETCH_ARTICLE_LIST'
     ]),
     getArticle (tag) {
-      // 避免多次触发同个标签
-      if (tag.active) return false
-      // 高亮当前标签
+      if (tag.active) return false // 避免多次触发同个标签
+      
+      this.$emit('get-article', tag)
       this.highlight(tag, this.prevTag)
-      // 获取标签对应的文章
-      // vueEvent.$emit('get-article', tag)
-      this.FETCH_ARTICLE_LIST().then((data) => {
-        console.log('this.articleList:', this.articleList)
-        console.log('data:', data)
-      })
     },
     highlight (currTag, prevTag) {
       this.$set(currTag, 'active', true)

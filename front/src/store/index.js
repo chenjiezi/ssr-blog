@@ -13,7 +13,6 @@ export default new Vuex.Store({
   actions: {
     FETCH_TAG_LIST({ commit }) {
       return new Promise((resolve, reject) => {
-        // TODO: ajax
         setTimeout(() => {
           commit('SET_TAG_LIST', tagList)
           resolve(tagList)
@@ -22,7 +21,6 @@ export default new Vuex.Store({
     },
     FETCH_ARTICLE_LIST({ commit }) {
       return new Promise((resolve, reject) => {
-        // TODO: ajax
         setTimeout(() => {
           commit('SET_ARTICLE_LIST', articleList)
           resolve(articleList)
