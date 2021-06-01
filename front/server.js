@@ -7,8 +7,8 @@ const fs = require('fs')
 const app = express();
 // 创建渲染器
 const {createBundleRenderer} = require("vue-server-renderer");
-const serverBundle = require('dist/server/vue-ssr-server-bundle.json');
-const clientManifest = require('dist/client/vue-ssr-client-manifest.json');
+const serverBundle = require('./dist/server/vue-ssr-server-bundle.json');
+const clientManifest = require('./dist/client/vue-ssr-client-manifest.json');
 const renderer = createBundleRenderer(serverBundle, {
     runInNewContext: false,
     template: fs.readFileSync('./src/index.template.html', 'utf-8'), // 宿主模板文件
@@ -23,19 +23,21 @@ app.get("*", async (req, res) => {
   try {
       const context = {
           url: req.url,
-          title: 'ssr test'
+          title: 'ssr test',
+          metas: `
+              <meta name="keyword" content="vue,ssr">
+              <meta name="description" content="vue srr demo">
+          `,
       }
 
     const html = await renderer.renderToString(context);
-    // eslint-disable-next-line no-console
-    console.log(html);
     res.send(html);
   } catch (error) {
+    console.log('error:', error)
     res.status(500).send("服务器内部错误");
   }
 });
 
 app.listen(3000, () => {
-  // eslint-disable-next-line no-console
   console.log("渲染服务器启动成功");
 });
