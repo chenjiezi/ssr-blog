@@ -1,19 +1,46 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <a-layout>
+      
+      <a-layout-header>
+        <Header />
+      </a-layout-header>
+
+      <!-- main -->
+      <a-layout-content>
+        <router-view />
+      </a-layout-content>
+      
+      <a-layout-footer>
+        <Footer />
+      </a-layout-footer>
+
+    </a-layout>
   </div>
 </template>
 
+<script>
+import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer'
+export default {
+  components: {
+    Header,
+    Footer
+  },
+  data() {
+    return {
+    };
+  },
+};
+</script>
+
 <style lang="stylus">
 #app
-  font-family Avenir, Helvetica, Arial, sans-serif
+  font-family -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
-  text-align center
-  color #2c3e50
-  margin-top 60px
+  .ant-layout-header,
+  .ant-layout-footer
+    background-color #fff
+    padding 0
 </style>
