@@ -6,9 +6,9 @@
         <dl>
           <dt>帮助</dt>
           <dd><a href="https://github.com/chenjiezi/ssr-blog" target="_blank">源码地址</a></dd>
-          <dd style="cursor: no-drop;width:56px;">意见反馈</dd>
-          <dd style="cursor: no-drop;width:56px;">常见问题</dd>
-          <dd style="cursor: no-drop;width:56px;">更新日志</dd>
+          <dd><a href="https://github.com/chenjiezi/ssr-blog/issues" target="_blank">意见反馈</a></dd>
+          <dd><a href="https://github.com/chenjiezi/ssr-blog/issues" target="_blank">常见问题</a></dd>
+          <dd><a href="https://github.com/chenjiezi/ssr-blog/commits/master" target="_blank">更新日志</a></dd>
         </dl>
       </a-col>
       <a-col :span="8">
@@ -23,8 +23,8 @@
         <dl>
           <dt>其他平台</dt>
           <dd><a href="https://github.com/chenjiezi" target="_blank">Github</a></dd>
-          <dd><a href="https://juejin.cn/user/1820446985294142" target="_blank">掘金</a></dd>
-          <dd><a href="https://segmentfault.com/u/icare" target="_blank">SegmentFault</a></dd>
+          <!-- <dd><a href="https://juejin.cn/user/1820446985294142" target="_blank">掘金</a></dd>
+          <dd><a href="https://segmentfault.com/u/icare" target="_blank">SegmentFault</a></dd> -->
         </dl>
       </a-col>
     </a-row>
@@ -57,7 +57,7 @@ export default {
     .container
       overflow hidden
       width 1080px
-      height 249px
+      height 300px
       margin 0 auto
       padding-top 40px
       /deep/ .ant-divider-inner-text
