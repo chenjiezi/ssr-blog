@@ -9,7 +9,7 @@
                 <a-icon type="home" />
                 首页
               </a-menu-item>
-              <a-menu-item @click="$router.replace('Archive').catch(err => err)" key="archive">
+              <a-menu-item @click="$router.replace('/Archive').catch(err => err)" key="archive">
                 <a-icon type="more" />
                 归档
               </a-menu-item>
@@ -33,7 +33,8 @@ export default {
     }
   },
   beforeCreate() {
-    this.$root.$on('menu', (data) => {
+    // 监听顶栏高亮状态变化
+    this.$root.$on('nav', (data) => {
       this.curMenu = [data]
     })
   },

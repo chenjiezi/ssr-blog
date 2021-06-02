@@ -38,7 +38,9 @@
     methods: {
       go (path) {
         this.$router.replace(path)
-        this.$root.$emit('menu', path.toLowerCase())
+
+        // 更新顶栏状态
+        this.$root.$emit('nav', path.toLowerCase())
       }
     }
   }
