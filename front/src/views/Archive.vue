@@ -7,7 +7,11 @@
         <ul>
           <li class="month">6月份</li>
           <li class="title">
-            <a href="//www.baidu.com" target="_blank">Javascript进阶-长任务优化：WebWorker与时间分片</a>
+            <router-link to="/Article/1">Javascript进阶-长任务优化：WebWorker与时间分片</router-link>
+            <span>1996-09-30</span>
+          </li>
+          <li class="title">
+            <router-link to="/Article/2">Javascript进阶-长任务优化：WebWorker与时间分片</router-link>
             <span>1996-09-30</span>
           </li>
           <li class="title">
