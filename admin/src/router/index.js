@@ -54,6 +54,44 @@ export const constantRoutes = [
       meta: { title: 'Dashboard', icon: 'dashboard' }
     }]
   },
+  {
+    path: '/titleindex',
+    component: Layout,
+    children: [{
+      path: '',
+      name: 'titleindex',
+      component: () => import('@/views/TitleIndex'),
+      meta: { title: '前台侧栏菜单', icon: 'el-icon-smoking' }
+    }]
+  },
+
+  {
+    path: '/list',
+    component: Layout,
+    children: [{
+      path: '',
+      name: 'list',
+      component: () => import('@/views/article/list'),
+      meta: { title: '文章列表', icon: 'el-icon-goblet-full' }
+    }, {
+      path: 'edit/:id',
+      name: 'edit',
+      hidden: true,
+      component: () => import('@/views/article/edit'),
+      meta: { title: '文章编辑' }
+    }]
+  },
+
+  {
+    path: '/create',
+    component: Layout,
+    children: [{
+      path: '',
+      name: 'create',
+      component: () => import('@/views/article/create'),
+      meta: { title: '创建文章', icon: 'el-icon-coffee' }
+    }]
+  },
 
   // 外链
   {
