@@ -24,7 +24,8 @@ const routes: Array<RouteConfig> = [
     path: '/Article/:id',
     name: 'Article',
     component: () => import('../views/Article.vue')
-  }
+  },
+  { path: '*', name: '*', component: Home }
 ]
 
 
