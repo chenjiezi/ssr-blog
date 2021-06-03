@@ -39,5 +39,5 @@ app.get("*", async (req, res) => {
 });
 
 app.listen(3000, () => {
-  console.log("渲染服务器启动成功");
+  console.log("渲染服务器启动成功：http://localhost:3000");
 });
