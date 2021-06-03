@@ -62,6 +62,4 @@ export default {
       padding-top 40px
       /deep/ .ant-divider-inner-text
         color #fff
-      /deep/ .ant-divider-horizontal
-        overflow: hidden;
 </style>
