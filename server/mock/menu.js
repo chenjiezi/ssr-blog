@@ -8,6 +8,7 @@ module.exports = [
     children: [
       {
         title: '闭包',
+        link: 'bi-bao',
         scopedSlots: { title: 'title' },
         key: '闭包'
       },
