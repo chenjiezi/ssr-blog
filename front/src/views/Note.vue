@@ -2,12 +2,12 @@
   <div id="Note">
     <div class="container">
       <a-row :gutter="[8,8]">
-        <a-col :span="5">
+        <a-col :span="4">
           <div class="side">
             <Menu />
           </div>
         </a-col>
-        <a-col :span="19">
+        <a-col :span="20">
           <div class="content">
             <p>
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat vitae quos, modi facilis natus quae
