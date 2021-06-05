@@ -1,119 +1,57 @@
 <template>
   <div id="Menu">
-    <a-tree
-      v-model="checkedKeys"
-      :expanded-keys="expandedKeys"
-      :auto-expand-parent="autoExpandParent"
-      :selected-keys="selectedKeys"
-      :tree-data="treeData"
-      @expand="onExpand"
-      @select="onSelect"
-    >
-    <a-icon slot="switcherIcon" type="down" />
-    <template slot="title" slot-scope="{ title }">
-      <span class="menu-title">
-        <div>{{title}}</div>
-        <a-icon class="menu-icon" type="link" />
-      </span>
+    <template v-if="treeData.length > 0">
+      <a-tree
+        :expanded-keys="expandedKeys"
+        :selected-keys="selectedKeys"
+        :tree-data="treeData"
+        @expand="onExpand"
+        @select="onSelect"
+      >
+      <a-icon slot="switcherIcon" type="down" />
+      <template slot="title" slot-scope="{ title }">
+        <span class="menu-title">
+          <div>{{title}}</div>
+          <a-icon class="menu-icon" type="link" />
+        </span>
+      </template>
+      </a-tree>
     </template>
-    </a-tree>
+    <template v-else>
+      <div class="loading">
+        <a-icon type="loading" />文章目录加载中
+      </div>
+    </template>
   </div>
 </template>
 
 <script>
+  import { getMenuList } from '@/api/menu'
+  import { setLocalData, getLocalData } from '@/util/utils'
   export default {
     name: 'Menu',
     data() {
       return {
-        expandedKeys: ['0-0-0', '0-0-1'],
-        autoExpandParent: true,
-        checkedKeys: ['0-0-0'],
-        selectedKeys: [],
-        treeData: [
-          {
-            title: '0-0',
-            key: '0-0',
-            children: [
-              {
-                title: '0-0-0',
-                key: '0-0-0',
-                children: [
-                  { 
-                    title: '啊啊啊啊啊啊',
-                    key: '0-0-0-0',
-                    scopedSlots: { title: 'title' }
-                  },
-                  {
-                    title: '0-0-0-1',
-                    scopedSlots: { title: 'title' },
-                    key: '0-0-0-1'
-                  },
-                  {
-                    title: '0-0-0-2',
-                    scopedSlots: { title: 'title' },
-                    key: '0-0-0-2'
-                  },
-                ],
-              },
-              {
-                title: '0-0-1',
-                key: '0-0-1',
-                children: [
-                  { title: '0-0-1-0', key: '0-0-1-0' },
-                  { title: '0-0-1-1', key: '0-0-1-1' },
-                  { title: '0-0-1-2', key: '0-0-1-2',
-                    children: [
-                      {
-                        title: '啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊',
-                        scopedSlots: { title: 'title' },
-                        key: '123'
-                      }
-                    ]
-                  },
-                ],
-              },
-              {
-                title: '0-0-2',
-                key: '0-0-2',
-              },
-            ],
-          },
-          {
-            title: '0-1',
-            key: '0-1',
-            scopedSlots: { title: 'title' },
-            children: [
-              { title: '0-1-0-0', key: '0-1-0-0' },
-              { title: '0-1-0-1', key: '0-1-0-1' },
-              { title: '0-1-0-2', key: '0-1-0-2' },
-            ],
-          },
-          {
-            title: '0-2',
-            key: '0-2',
-          },
-        ]
+        expandedKeys: getLocalData('expandedKeys') || [],
+        selectedKeys: getLocalData('selectedKeys') || [],
+        treeData: []
       }
     },
-    watch: {
-      checkedKeys(val) {
-        console.log('onCheck', val);
-      },
+    created () {
+      // 获取文章目录列表
+      getMenuList().then(res => {
+        this.treeData = res?.data?.menuList || []
+      })
     },
     methods: {
       onExpand(expandedKeys) {
-        console.log('onExpand', expandedKeys);
-        // if not set autoExpandParent to false, if children expanded, parent can not collapse.
-        // or, you can remove all expanded children keys.
+        setLocalData('expandedKeys', expandedKeys)
         this.expandedKeys = expandedKeys;
-        this.autoExpandParent = false;
       },
-      onCheck(checkedKeys) {
-        console.log('onCheck', checkedKeys);
-        this.checkedKeys = checkedKeys;
-      },
-      onSelect(selectedKeys, info) {
-        console.log('onSelect', info);
+      onSelect(selectedKeys, { node }) {
+        // console.log('selectedKeys:', selectedKeys)
+        console.log(' node.dataRef :',  node.dataRef )
+        setLocalData('selectedKeys', selectedKeys)
         this.selectedKeys = selectedKeys;
       },
     },
@@ -127,6 +65,10 @@
       align-items center
     .menu-icon
       margin-left 6px
+    .loading
+      font-size 12px
+      color #000
+      margin 20px
     /deep/ .ant-tree li
       white-space normal
       .ant-tree-node-content-wrapper
