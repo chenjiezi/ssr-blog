@@ -57,7 +57,7 @@ export default {
     .container
       overflow hidden
       width 1080px
-      height 300px
+      min-height 300px
       margin 0 auto
       padding-top 40px
       /deep/ .ant-divider-inner-text
