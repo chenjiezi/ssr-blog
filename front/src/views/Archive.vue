@@ -2,123 +2,14 @@
   <div id="Archive">
     <div class="container">
       <h1 class="article-w">全部文章（ALL：888）</h1>
-      <div class="list">
-        <h1 class="year">1996</h1>
-        <ul>
-          <li class="month">6月份</li>
-          <li class="title">
-            <router-link to="/Article/1">Javascript进阶-长任务优化：WebWorker与时间分片</router-link>
-            <span>1996-09-30</span>
-          </li>
-          <li class="title">
-            <router-link to="/Article/2">Javascript进阶-长任务优化：WebWorker与时间分片</router-link>
-            <span>1996-09-30</span>
-          </li>
-          <li class="title">
-            <a href="//www.baidu.com" target="_blank">Javascript进阶-长任务优化：WebWorker与时间分片</a>
-            <span>1996-09-30</span>
-          </li>
-          <li class="title">
-            <a href="//www.baidu.com" target="_blank">Javascript进阶-长任务优化：WebWorker与时间分片长任务优化：WebWorker与时间分片长任务优化：WebWorker与时间分片长任务优化：WebWorker与时间分片</a>
-            <span>1996-09-30</span>
-          </li>
-          <li class="title">
-            <a href="//www.baidu.com" target="_blank">Javascript进阶-长任务优化：WebWorker与时间分片长任务优化：WebWorker与时间分片长任务优化：WebWorker与时间分片长任务优化：WebWorker与时间分片</a>
-            <span>1996-09-30</span>
-          </li>
-          <li class="title">
-            <a href="//www.baidu.com" target="_blank">Javascript进阶-长任务优化：WebWorker与时间分片长任务优化：WebWorker与时间分片长任务优化：WebWorker与时间分片长任务优化：WebWorker与时间分片</a>
-            <span>1996-09-30</span>
-          </li>
-        </ul>
-        <ul>
-          <li class="month">8月份</li>
-          <li class="title">
-            <a href="//www.baidu.com" target="_blank">Javascript进阶-长任务优化：WebWorker与时间分片</a>
-            <span>1996-09-30</span>
-          </li>
-          <li class="title">
-            <a href="//www.baidu.com" target="_blank">Javascript进阶-长任务优化：WebWorker与时间分片</a>
-            <span>1996-09-30</span>
-          </li>
-          <li class="title">
-            <a href="//www.baidu.com" target="_blank">Javascript进阶-长任务优化：WebWorker与时间分片长任务优化：WebWorker与时间分片长任务优化：WebWorker与时间分片长任务优化：WebWorker与时间分片</a>
-            <span>1996-09-30</span>
-          </li>
-        </ul>
-      </div>
-      <div class="list">
-        <h1 class="year">1996</h1>
-        <ul>
-          <li class="month">6月份</li>
-          <li class="title">
-            <a href="//www.baidu.com" target="_blank">Javascript进阶-长任务优化：WebWorker与时间分片</a>
-            <span>1996-09-30</span>
-          </li>
-          <li class="title">
-            <a href="//www.baidu.com" target="_blank">Javascript进阶-长任务优化：WebWorker与时间分片</a>
-            <span>1996-09-30</span>
-          </li>
-          <li class="title">
-            <a href="//www.baidu.com" target="_blank">Javascript进阶-长任务优化：WebWorker与时间分片长任务优化：WebWorker与时间分片长任务优化：WebWorker与时间分片长任务优化：WebWorker与时间分片</a>
-            <span>1996-09-30</span>
-          </li>
-        </ul>
-      </div>
-      <div class="list">
-        <h1 class="year">1996</h1>
-        <ul>
-          <li class="month">6月份</li>
-          <li class="title">
-            <a href="//www.baidu.com" target="_blank">Javascript进阶-长任务优化：WebWorker与时间分片</a>
-            <span>1996-09-30</span>
-          </li>
-          <li class="title">
-            <a href="//www.baidu.com" target="_blank">Javascript进阶-长任务优化：WebWorker与时间分片</a>
-            <span>1996-09-30</span>
-          </li>
-          <li class="title">
-            <a href="//www.baidu.com" target="_blank">Javascript进阶-长任务优化：WebWorker与时间分片长任务优化：WebWorker与时间分片长任务优化：WebWorker与时间分片长任务优化：WebWorker与时间分片</a>
-            <span>1996-09-30</span>
-          </li>
-        </ul>
-      </div>
-      <div class="list">
-        <h1 class="year">1996</h1>
-        <ul>
-          <li class="month">6月份</li>
-          <li class="title">
-            <a href="//www.baidu.com" target="_blank">Javascript进阶-长任务优化：WebWorker与时间分片</a>
-            <span>1996-09-30</span>
-          </li>
-          <li class="title">
-            <a href="//www.baidu.com" target="_blank">Javascript进阶-长任务优化：WebWorker与时间分片</a>
-            <span>1996-09-30</span>
-          </li>
-          <li class="title">
-            <a href="//www.baidu.com" target="_blank">Javascript进阶-长任务优化：WebWorker与时间分片长任务优化：WebWorker与时间分片长任务优化：WebWorker与时间分片长任务优化：WebWorker与时间分片</a>
-            <span>1996-09-30</span>
-          </li>
-        </ul>
-      </div>
-      <div class="list">
-        <h1 class="year">1996</h1>
-        <ul>
-          <li class="month">6月份</li>
-          <li class="title">
-            <a href="//www.baidu.com" target="_blank">Javascript进阶-长任务优化：WebWorker与时间分片</a>
-            <span>1996-09-30</span>
-          </li>
-          <li class="title">
-            <a href="//www.baidu.com" target="_blank">Javascript进阶-长任务优化：WebWorker与时间分片</a>
-            <span>1996-09-30</span>
-          </li>
-          <li class="title">
-            <a href="//www.baidu.com" target="_blank">Javascript进阶-长任务优化：WebWorker与时间分片长任务优化：WebWorker与时间分片长任务优化：WebWorker与时间分片长任务优化：WebWorker与时间分片</a>
-            <span>1996-09-30</span>
-          </li>
-        </ul>
-      </div>
+      <ul class="list">
+        <li class="item" v-for="article of articleList" :key="article.id">
+          <div class="title">
+            <router-link :to="'/article/' + article.path" >{{article.title}}</router-link>
+          </div>
+          <div class="date">{{article.dateTime}}</div>
+        </li>
+      </ul>
       <!-- 分页 -->
       <div class="pagination">
         <a-pagination :total="50" show-less-items />
@@ -130,6 +21,36 @@
 <script>
   export default {
     name: 'Archive',
+    data () {
+      return {
+        articleList: [
+          {
+            id: '1',
+            title: '按时大苏打实打实啊实打实的',
+            dateTime: '2021/6/6',
+            path: 'bi-bao'
+          },
+          {
+            id: '2',
+            title: '按时大苏打实打实啊实打实的',
+            dateTime: '2021/6/6',
+            path: 'yuan-xing-lian'
+          },
+          {
+            id: '3',
+            title: '按时大苏打实打实啊实打实的',
+            dateTime: '2021/6/6',
+            path: 'bi-bao'
+          },
+          {
+            id: '4',
+            title: '按时大苏打实打实啊实打实的',
+            dateTime: '2021/6/6',
+            path: 'bi-bao'
+          }
+        ]
+      }
+    }
   }
 </script>
 
@@ -137,6 +58,14 @@
 <style lang="stylus" scoped>
   ul
     list-style none
+  a
+    display inline-block
+    width 600px
+    overflow hidden
+    white-space nowrap
+    text-overflow ellipsis
+    margin-right 100px
+    color inherit
 
   #Archive
     .container
@@ -144,40 +73,30 @@
       min-height calc(100vh - 80px)
       margin 0 auto
       padding 20px 10px
-      background-color #fff
+      background-color rgba(0,0,0,.02)
       .article-w
         font-size 35px
         margin-left 20px
         color #888
       .list
-        .year
-          font-size 30px
-          margin-left 20px
-          color #888
-        .month
-          font-weight bold
-          font-size 18px
-          color #888
-        .title
+        .item
           display flex
           cursor pointer
+          height 40px
+          line-height 40px
           font-size 16px
+          color #444
           transition all 0.3s
-          color #000
-          margin 8px 0
-          margin-left 20px
           &:hover
             background rgba(0,0,0,.05)
-            margin-left 22px
-          a
-            display inline-block
+          .title
             width 600px
+            margin-right 200px
             overflow hidden
-            white-space nowrap
             text-overflow ellipsis
-            margin-right 100px
-            color inherit
+            white-space nowrap
+            &:hover
+              font-weight bold
     .pagination
-      text-align center
-      margin 20px 0
+      margin 40px 20px
 </style>
