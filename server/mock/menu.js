@@ -4,43 +4,43 @@ module.exports = [
   {
     title: 'javascript',
     key: 'javascript',
-    scopedSlots: { title: 'title' },
+    hasContent: true,
     children: [
       {
         title: '闭包',
-        link: 'bi-bao',
-        scopedSlots: { title: 'title' },
-        key: '闭包'
+        hasContent: true,
+        key: 'bi-bao'
       },
       {
         title: '原型链',
-        scopedSlots: { title: 'title' },
-        key: '原型链'
+        hasContent: true,
+        key: 'yuan-xing-lian'
       },
       {
         title: '事件循环',
-        scopedSlots: { title: 'title' },
-        key: '事件循环'
+        hasContent: true,
+        key: 'event-loop'
       },
     ]
   },
   {
     title: 'css',
     key: 'css',
+    hasContent: false,
     children: [
       {
         title: '盒模型',
-        scopedSlots: { title: 'title' },
+        hasContent: true,
         key: '盒模型'
       },
       {
         title: 'BFC',
-        scopedSlots: { title: 'title' },
+        hasContent: true,
         key: 'BFC'
       },
       {
         title: 'flex',
-        scopedSlots: { title: 'title' },
+        hasContent: true,
         key: 'flex'
       },
     ]
