@@ -1,54 +1,58 @@
 <template>
   <div id="Archive">
     <div class="container">
-      <h1 class="article-w">全部文章（ALL：888）</h1>
-      <ul class="list">
-        <li class="item" v-for="article of articleList" :key="article.id">
-          <div class="title">
-            <router-link :to="'/article/' + article.path" >{{article.title}}</router-link>
-          </div>
-          <div class="date">{{article.dateTime}}</div>
-        </li>
-      </ul>
-      <!-- 分页 -->
-      <div class="pagination">
-        <a-pagination :total="50" show-less-items />
-      </div>
+      <h1 class="article-w">全部文章（ALL：{{total}}）</h1>
+      <template v-if="articleList.length > 0">
+        <ul class="list">
+          <li class="item" v-for="article of articleList" :key="article.id">
+            <div class="title">
+              <router-link :to="'/article/' + article.path" >{{article.title}}</router-link>
+            </div>
+            <div class="date">{{article.dateTime}}</div>
+          </li>
+        </ul>
+        <!-- 分页 -->
+        <div class="pagination">
+          <a-pagination
+            @change="onChange"
+            :current="curPage"
+            :pageSize="pageSize"
+            :total="total" />
+        </div>
+      </template>
+      <template v-else>
+        <a-empty />
+      </template>
     </div>
   </div>
 </template>
 
 <script>
+  import { getArticleList } from '@/api/article'; 
+
   export default {
     name: 'Archive',
     data () {
       return {
-        articleList: [
-          {
-            id: '1',
-            title: '按时大苏打实打实啊实打实的',
-            dateTime: '2021/6/6',
-            path: 'bi-bao'
-          },
-          {
-            id: '2',
-            title: '按时大苏打实打实啊实打实的',
-            dateTime: '2021/6/6',
-            path: 'yuan-xing-lian'
-          },
-          {
-            id: '3',
-            title: '按时大苏打实打实啊实打实的',
-            dateTime: '2021/6/6',
-            path: 'bi-bao'
-          },
-          {
-            id: '4',
-            title: '按时大苏打实打实啊实打实的',
-            dateTime: '2021/6/6',
-            path: 'bi-bao'
-          }
-        ]
+        articleList: [],
+        curPage: 1,
+        pageSize: 10,
+        total: -1
+      }
+    },
+    created () {
+      this.getData()
+    },
+    methods: {
+      onChange (page) {
+        this.curPage = page
+        this.getData()
+      },
+      getData () {
+        getArticleList({curPage:this.curPage}).then(res => {
+          this.articleList = res.data.articleList
+          this.total = res.data.total
+        })  
       }
     }
   }
@@ -68,12 +72,13 @@
     color inherit
 
   #Archive
+    background-color rgba(0,0,0,.02)
     .container
       width 1080px
       min-height calc(100vh - 80px)
       margin 0 auto
       padding 20px 10px
-      background-color rgba(0,0,0,.02)
+      background-color #fff
       .article-w
         font-size 35px
         margin-left 20px
