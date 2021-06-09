@@ -3,6 +3,14 @@ const express = require("express");
 const Vue = require("vue");
 const fs = require('fs')
 
+const { JSDOM } = require('jsdom');
+const dom = new JSDOM('<!doctype html><html><body></body></html>', { url: 'http://localhost' });
+
+global.window = dom.window;
+global.window.Date = Date;
+global.document = window.document;
+// global.navigator = window.navigator;
+
 // 创建express实例和vue实例
 const app = express();
 // 创建渲染器
