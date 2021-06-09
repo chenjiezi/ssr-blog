@@ -34,7 +34,7 @@ export const TreeDataFindParents = (data, target, key = 'key') => {
  * @param {Json} value local value
  */
 export const setLocalData = (key, value) => {
-  localStorage.setItem(key, JSON.stringify(value))
+  window.localStorage.setItem(key, JSON.stringify(value))
 }
 
 /**
@@ -42,6 +42,6 @@ export const setLocalData = (key, value) => {
  * @param {String} key local key
  */
 export const getLocalData = (key) => {
-  const json = localStorage.getItem(key)
+  const json = window.localStorage.getItem(key)
   return JSON.parse(json)
 }
