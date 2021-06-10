@@ -47,39 +47,47 @@
 
   export default {
     name: 'Menu',
+    asyncData ({ store }) {
+      return store.dispatch('fetchMenuList')
+    },
+    computed: {
+      menuList () {
+        return this.$store.state.menuList
+      }
+    },
     data() {
       return {
         isLoading: true,
         expandedKeys: getLocalData('expandedKeys') || [],
         selectedKeys: [],
-        treeData: []
+        treeData: menuList
       }
     },
     mounted () {
-      // 获取文章目录列表
-      getMenuList()
-      .then(res => {
-        let data = res?.data?.menuList || []
-        handleData(data)
-        this.treeData = data
+      // // 获取文章目录列表
+      // getMenuList()
+      // .then(res => {
+      //   let data = res?.data?.menuList || []
+      //   handleData(data)
+      //   this.treeData = data
         
-        // 初始化目录当前节点高亮
-        const { params } = this.$router.history.current
-        this.selectedKeys = params.id ? [params.id] : []
+      //   // 初始化目录当前节点高亮
+      //   const { params } = this.$router.history.current
+      //   this.selectedKeys = params.id ? [params.id] : []
 
-        // 高亮的子节点的父节点如果没展开，会通过计算展开
-        let p = TreeDataFindParents(this.treeData, params.id)
-        if (p.length > 0) {
-          p = p.concat(getLocalData('expandedKeys'), params.id)
-          p = [...new Set(p)] // 去重
-          this.expandedKeys = p
-          // 更新本地数据
-          setLocalData('expandedKeys', p)
-        }
-      })
-      .finally(() => {
-        this.isLoading = false
-      })
+      //   // 高亮的子节点的父节点如果没展开，会通过计算展开
+      //   let p = TreeDataFindParents(this.treeData, params.id)
+      //   if (p.length > 0) {
+      //     p = p.concat(getLocalData('expandedKeys'), params.id)
+      //     p = [...new Set(p)] // 去重
+      //     this.expandedKeys = p
+      //     // 更新本地数据
+      //     setLocalData('expandedKeys', p)
+      //   }
+      // })
+      // .finally(() => {
+      //   this.isLoading = false
+      // })
     },
     methods: {
       onExpand(expandedKeys) {
