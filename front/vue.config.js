@@ -42,14 +42,15 @@ module.exports = {
     // 服务端默认文件名为 `vue-ssr-server-bundle.json`
     plugins: [TARGET_NODE ? new VueSSRServerPlugin() : new VueSSRClientPlugin()]
   }),
-  chainWebpack: config => {
-    config.module
-      .rule("vue")
-      .use("vue-loader")
-      .tap(options => {
-        merge(options, {
-          optimizeSSR: false
-        });
-      });
-  }
+  // TODO: 这里可能重置 vue-cli 中自带的 webpack 配置，有待研究
+  // chainWebpack: config => {
+  //   config.module
+  //     .rule("vue")
+  //     .use("vue-loader")
+  //     .tap(options => {
+  //       merge(options, {
+  //         optimizeSSR: false
+  //       });
+  //     });
+  // }
 };
