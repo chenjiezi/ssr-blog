@@ -1,73 +1,58 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        front-nuxtjs
-      </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
+  <div id="Home">
+    <div class="container">
+      <h1 class="title">chenJz's Blog</h1>
+      <p>👨‍💻 Web 前端攻城狮</p>
+      <p>✍️ 记录技术成长历程</p>
+      <div class="entry">
+        <a-button
+          @click="go('Note')"
+          class="entry-btn"
+          shape="round"
+          size="large"
+          type="primary">
+            快速浏览
+        </a-button>
+        <a-button
+          @click="go('Archive/?curPage=1')"
+          class="entry-btn"
+          shape="round"
+          size="large"
+          type="primary"
+          ghost>
+            进入博客
+        </a-button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+  export default {
+    name: 'Home',
+    methods: {
+      go (path) {
+        this.$router.replace(path)
+
+        // 更新顶栏状态
+        this.$root.$emit('nav', path.toLowerCase())
+      }
+    }
+  }
 </script>
 
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
+<style lang="stylus" scoped>
+  #Home 
+    .container
+      height calc(100vh - 64px)
+      padding-top 200px
+      font-size 16px
+      background #fff
+      & > *
+        text-align center
+      .title
+        font-size 48px
+      .entry
+        .entry-btn
+          margin 20px
 </style>
