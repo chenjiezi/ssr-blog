@@ -1,5 +1,8 @@
 const Koa = require('koa')
 
+const log = require('log4js').getLogger('Mock Server');
+log.level = 'info';
+
 const app = new Koa()
 
 const respDurationMiddleware = require('./middleware/duration')
@@ -19,8 +22,6 @@ app.use(router.allowedMethods())
 
 // 启动服务
 app.listen('8888', () => {
-  console.log('==================')
-  console.log('http://localhost:8888')
-  console.log('服务启动成功~')
-  console.log('==================')
+  log.info('Welcome to Koa')
+  log.info('Listening on port 8888')
 })

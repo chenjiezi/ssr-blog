@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "server": "nodemon ./app.js"
   },
   "keywords": [],
   "author": "",
@@ -13,5 +13,8 @@
     "koa": "^2.13.1",
     "koa-router": "^10.0.0",
     "mockjs": "^1.1.0"
+  },
+  "devDependencies": {
+    "log4js": "^6.3.0"
   }
 }
