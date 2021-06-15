@@ -23,6 +23,9 @@ router.get('/api/menu', async (ctx) => {
 
 // 文章列表
 router.get('/api/article', async (ctx) => {
+
+  console.log('ctx.request.url:', ctx.request.url)
+
   let url = ctx.request.url
   let params = url.split('?')[1] || ''
   let curPage = +params.split('=')[1] || 1
