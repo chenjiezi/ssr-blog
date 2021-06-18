@@ -14,7 +14,7 @@
             快速浏览
         </a-button>
         <a-button
-          @click="go('Archive/?curPage=1')"
+          @click="go('Archive/?page=1')"
           class="entry-btn"
           shape="round"
           size="large"
@@ -29,13 +29,10 @@
 
 <script>
   export default {
-    name: 'Home',
+    name: 'home',
     methods: {
       go (path) {
         this.$router.replace(path)
-
-        // 更新顶栏状态
-        this.$root.$emit('nav', path.toLowerCase())
       }
     }
   }
