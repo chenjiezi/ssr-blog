@@ -6,7 +6,7 @@
         <ul class="list">
           <li class="item" v-for="article of articleList" :key="article.id">
             <div class="title">
-              <router-link :to="'/article/' + article.path" >{{article.title}}</router-link>
+              <router-link :to="'/post?t=' + article.path" >{{article.title}}</router-link>
             </div>
             <div class="date">{{article.dateTime}}</div>
           </li>
@@ -29,13 +29,13 @@
 
 <script>
   export default {
-    name: 'Archive',
-    async asyncData ({ $api, route }) {
-      let { data } = await $api.get('/api/article', { params: route.query })
-      let articleList = data.articleList || []
-      let curPage = data.curPage || 1
+    name: 'archive',
+    async asyncData ({ $axios, route }) {
+      let res = await $axios.get('/api/article', { params: route.query })
+      let articleList = res.data.data.articleList || []
+      let curPage = res.data.data.curPage || 1
       let pageSize = 10
-      let total = data.total || -1
+      let total = res.data.data.total || -1
       
       return  {
         articleList,
@@ -47,8 +47,7 @@
     methods: {
       onChange (page) {
         // TODO: 改进
-        // this.$router.replace(`/archive?curPage=${page}`)
-        window.location = `/archive?curPage=${page}`
+        window.location.href = `/archive?page=${page}`
       }
     }
   }
@@ -71,7 +70,7 @@
     background-color rgba(0,0,0,.02)
     .container
       width 1080px
-      min-height calc(100vh - 80px)
+      min-height calc(100vh - 64px)
       margin 0 auto
       padding 20px 10px
       background-color #fff
