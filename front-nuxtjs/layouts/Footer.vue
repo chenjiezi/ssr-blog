@@ -1,5 +1,5 @@
 <template>
-<div id="Footer">
+<div id="footer">
   <div class="container">
     <a-row>
       <a-col :span="8">
@@ -51,7 +51,7 @@ export default {
       cursor pointer
       color #5fb7b7
 
-  #Footer
+  #footer
     background #2F4F4F
     color #fff
     .container
