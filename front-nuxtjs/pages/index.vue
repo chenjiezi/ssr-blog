@@ -6,7 +6,7 @@
       <p>✍️ 记录技术成长历程</p>
       <div class="entry">
         <a-button
-          @click="go('Note')"
+          @click="go('/note')"
           class="entry-btn"
           shape="round"
           size="large"
@@ -14,7 +14,7 @@
             快速浏览
         </a-button>
         <a-button
-          @click="go('Archive/?page=1')"
+          @click="go('/archive?page=1')"
           class="entry-btn"
           shape="round"
           size="large"

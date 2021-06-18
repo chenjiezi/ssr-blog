@@ -9,7 +9,7 @@
                 <a-icon type="home" />
                 首页
               </a-menu-item>
-              <a-menu-item @click="$router.replace('/archive/?page=1').catch(err => err)" key="archive">
+              <a-menu-item @click="$router.replace('/archive?page=1').catch(err => err)" key="archive">
                 <a-icon type="more" />
                 归档
               </a-menu-item>
