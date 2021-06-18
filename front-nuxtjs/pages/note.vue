@@ -79,8 +79,8 @@
 <script>
   import Menu from '@/components/Menu.vue';
   export default {
-  components: { Menu },
-    name: 'Note',
+    components: { Menu },
+    name: 'note',
   }
 </script>
 
