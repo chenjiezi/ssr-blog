@@ -5,11 +5,11 @@
         <a-col :span="12">
           <div class="nav-bar">
             <a-menu v-model="curMenu" mode="horizontal">
-              <a-menu-item @click="$router.replace('/').catch(err => err)" key="home">
+              <a-menu-item @click="$router.replace('/').catch(err => err)" key="index">
                 <a-icon type="home" />
                 首页
               </a-menu-item>
-              <a-menu-item @click="$router.replace('/archive/?curPage=1').catch(err => err)" key="archive">
+              <a-menu-item @click="$router.replace('/archive/?page=1').catch(err => err)" key="archive">
                 <a-icon type="more" />
                 归档
               </a-menu-item>
@@ -29,18 +29,12 @@ export default {
   name: 'Header',
   data () {
     return {
-      curMenu: ['home'],
+      curMenu: [],
     }
   },
-  beforeCreate() {
-    // 监听顶栏高亮状态变化
-    this.$root.$on('nav', (data) => {
-      this.curMenu = [data]
-    })
+  mounted() {
+    this.curMenu = [this.$route.name]
   },
-  computed: {
-
-  }
 }
 </script>
 
