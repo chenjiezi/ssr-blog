@@ -33,15 +33,20 @@
 <script>
   import { TreeDataFindParents, setLocalData, getLocalData } from '@/util/utils'
 
-  function handleData (data = [], scopedSlots = { title: 'title' }) {
-    data.forEach(item => {
-      if (item.hasContent) {
-        item.scopedSlots = scopedSlots
-      }
-      if (item?.children?.length > 0) {
-        handleData(item.children)
-      }
-    })
+  function handleData (data = []) {
+
+    const t =(data) => {
+      data.forEach(item => {
+        if (item.hasContent) {
+          item.scopedSlots = { title: 'title' }
+        }
+        if (item?.children?.length > 0) {
+          t(item.children)
+        }
+      })
+    }
+
+    return data
   }
 
   export default {
@@ -51,34 +56,34 @@
         isLoading: true,
         expandedKeys: [],
         selectedKeys: [],
-        treeData: []
+        treeData: [],
       }
     },
     mounted () {
-      // // 获取文章目录列表
-      // getMenuList()
-      // .then(res => {
-      //   let data = res?.data?.menuList || []
-      //   handleData(data)
-      //   this.treeData = data
+      // 获取文章目录列表
+      this.$axios.get('/api/menu').then(res => {
+        let data = res?.data?.data?.menuList || []
+        this.treeData = handleData(data)
         
-      //   // 初始化目录当前节点高亮
-      //   const { params } = this.$router.history.current
-      //   this.selectedKeys = params.id ? [params.id] : []
+        // 初始化目录当前节点高亮
+        const { query } = this.$route
+        this.selectedKeys = query.t ? [query.t] : []
 
-      //   // 高亮的子节点的父节点如果没展开，会通过计算展开
-      //   let p = TreeDataFindParents(this.treeData, params.id)
-      //   if (p.length > 0) {
-      //     p = p.concat(getLocalData('expandedKeys'), params.id)
-      //     p = [...new Set(p)] // 去重
-      //     this.expandedKeys = p
-      //     // 更新本地数据
-      //     setLocalData('expandedKeys', p)
-      //   }
-      // })
-      // .finally(() => {
-      //   this.isLoading = false
-      // })
+        // 高亮的子节点的父节点如果没展开，会通过计算展开
+        let p = TreeDataFindParents(this.treeData, query.t)
+        if (p.length > 0) {
+          p = p.concat(getLocalData('expandedKeys'), query.t)
+          p = [...new Set(p)] // 去重
+          this.expandedKeys = p
+          // 更新本地数据
+          setLocalData('expandedKeys', p)
+        } else {
+          this.expandedKeys = getLocalData('expandedKeys') || []
+        }
+      })
+      .finally(() => {
+        this.isLoading = false
+      })
     },
     methods: {
       onExpand(expandedKeys) {
@@ -92,7 +97,10 @@
 
         // 重定向路由
         if (dataRef.hasContent) {
-          this.$router.push('/article/' + dataRef.key).catch(err => err)
+          // TODO:
+          if (this.$route.query.t !== dataRef.key) {
+            window.location.href = '/post?t=' + dataRef.key
+          }
         }
         
         // 点击父节点展开/折叠
