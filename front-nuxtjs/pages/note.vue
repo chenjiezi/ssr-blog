@@ -1,5 +1,5 @@
 <template>
-  <div id="Note">
+  <div id="note">
     <div class="container">
       <a-row :gutter="[8,8]">
         <a-col :span="4">
@@ -9,66 +9,7 @@
         </a-col>
         <a-col :span="20">
           <div class="content">
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat vitae quos, modi facilis natus quae
-               at magni earum hic quibusdam, debitis fuga accusamus veritatis tempore voluptate, eaque placeat repudiandae rem!
-            </p>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat vitae quos, modi facilis natus quae
-               at magni earum hic quibusdam, debitis fuga accusamus veritatis tempore voluptate, eaque placeat repudiandae rem!
-            </p>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat vitae quos, modi facilis natus quae
-               at magni earum hic quibusdam, debitis fuga accusamus veritatis tempore voluptate, eaque placeat repudiandae rem!
-            </p>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat vitae quos, modi facilis natus quae
-               at magni earum hic quibusdam, debitis fuga accusamus veritatis tempore voluptate, eaque placeat repudiandae rem!
-            </p>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat vitae quos, modi facilis natus quae
-               at magni earum hic quibusdam, debitis fuga accusamus veritatis tempore voluptate, eaque placeat repudiandae rem!
-            </p>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat vitae quos, modi facilis natus quae
-               at magni earum hic quibusdam, debitis fuga accusamus veritatis tempore voluptate, eaque placeat repudiandae rem!
-            </p>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat vitae quos, modi facilis natus quae
-               at magni earum hic quibusdam, debitis fuga accusamus veritatis tempore voluptate, eaque placeat repudiandae rem!
-            </p>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat vitae quos, modi facilis natus quae
-               at magni earum hic quibusdam, debitis fuga accusamus veritatis tempore voluptate, eaque placeat repudiandae rem!
-            </p>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat vitae quos, modi facilis natus quae
-               at magni earum hic quibusdam, debitis fuga accusamus veritatis tempore voluptate, eaque placeat repudiandae rem!
-            </p>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat vitae quos, modi facilis natus quae
-               at magni earum hic quibusdam, debitis fuga accusamus veritatis tempore voluptate, eaque placeat repudiandae rem!
-            </p>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat vitae quos, modi facilis natus quae
-               at magni earum hic quibusdam, debitis fuga accusamus veritatis tempore voluptate, eaque placeat repudiandae rem!
-            </p>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat vitae quos, modi facilis natus quae
-               at magni earum hic quibusdam, debitis fuga accusamus veritatis tempore voluptate, eaque placeat repudiandae rem!
-            </p>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat vitae quos, modi facilis natus quae
-               at magni earum hic quibusdam, debitis fuga accusamus veritatis tempore voluptate, eaque placeat repudiandae rem!
-            </p>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat vitae quos, modi facilis natus quae
-               at magni earum hic quibusdam, debitis fuga accusamus veritatis tempore voluptate, eaque placeat repudiandae rem!
-            </p>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat vitae quos, modi facilis natus quae
-               at magni earum hic quibusdam, debitis fuga accusamus veritatis tempore voluptate, eaque placeat repudiandae rem!
-            </p>
+            {{ content }}
           </div>
         </a-col>
       </a-row>
@@ -81,11 +22,19 @@
   export default {
     components: { Menu },
     name: 'note',
+    async asyncData ({ $axios }) {
+      const res =  await $axios.post('/api/article-detail', { title : 'note'})
+      const content = res?.data?.data?.content || ''
+
+      return  {
+        content
+      }
+    },
   }
 </script>
 
 <style lang="stylus" scoped>
-  #Note
+  #note
     background-color #fff
     .container
       width 1200px
