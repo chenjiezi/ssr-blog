@@ -27,6 +27,13 @@ export default {
     '@/plugins/axios',
   ],
 
+  /*
+   ** Router property -  https://nuxtjs.org/docs/2.x/features/file-system-routing#the-router-property
+   */
+  router: {
+    middleware: ['class']
+  },
+
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
