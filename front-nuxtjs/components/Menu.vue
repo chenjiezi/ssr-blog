@@ -59,7 +59,7 @@
         treeData: [],
       }
     },
-    mounted () {
+    beforeMount () {
       // 获取文章目录列表
       this.$axios.get('/api/menu').then(res => {
         let data = res?.data?.data?.menuList || []
@@ -67,16 +67,14 @@
         
         // 初始化目录当前节点高亮
         const { query } = this.$route
-        this.selectedKeys = query.t ? [query.t] : []
+        this.selectedKeys = query.title ? [query.title] : []
 
         // 高亮的子节点的父节点如果没展开，会通过计算展开
-        let p = TreeDataFindParents(this.treeData, query.t)
+        let p = TreeDataFindParents(this.treeData, query.title)
         if (p.length > 0) {
-          p = p.concat(getLocalData('expandedKeys'), query.t)
-          p = [...new Set(p)] // 去重
-          this.expandedKeys = p
-          // 更新本地数据
-          setLocalData('expandedKeys', p)
+          p = p.concat(getLocalData('expandedKeys'), query.title)
+          this.expandedKeys = [...new Set(p)] // 去重
+          setLocalData('expandedKeys', p) // 更新本地数据
         } else {
           this.expandedKeys = getLocalData('expandedKeys') || []
         }
@@ -97,9 +95,8 @@
 
         // 重定向路由
         if (dataRef.hasContent) {
-          // TODO:
-          if (this.$route.query.t !== dataRef.key) {
-            window.location.href = '/post?t=' + dataRef.key
+          if (this.$route.query.title !== dataRef.key) {
+            window.location.href = '/post?title=' + dataRef.key
           }
         }
         
