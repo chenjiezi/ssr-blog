@@ -44,7 +44,8 @@ router.post('/api/article-detail', async (ctx) => {
   const { title } = ctx.request.body
   
   ctx.response.body = resBody({
-    content: `${title} - content`
+    content: `${title} - content`,
+    anchors: ['小标题A', '小标题B', '小标题C', '小标题D']
   })
 })
 
