@@ -9,77 +9,15 @@
         </a-col>
         <a-col :span="16">
           <div class="content">
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat vitae quos, modi facilis natus quae
-               at magni earum hic quibusdam, debitis fuga accusamus veritatis tempore voluptate, eaque placeat repudiandae rem!
-            </p>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat vitae quos, modi facilis natus quae
-               at magni earum hic quibusdam, debitis fuga accusamus veritatis tempore voluptate, eaque placeat repudiandae rem!
-            </p>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat vitae quos, modi facilis natus quae
-               at magni earum hic quibusdam, debitis fuga accusamus veritatis tempore voluptate, eaque placeat repudiandae rem!
-            </p>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat vitae quos, modi facilis natus quae
-               at magni earum hic quibusdam, debitis fuga accusamus veritatis tempore voluptate, eaque placeat repudiandae rem!
-            </p>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat vitae quos, modi facilis natus quae
-               at magni earum hic quibusdam, debitis fuga accusamus veritatis tempore voluptate, eaque placeat repudiandae rem!
-            </p>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat vitae quos, modi facilis natus quae
-               at magni earum hic quibusdam, debitis fuga accusamus veritatis tempore voluptate, eaque placeat repudiandae rem!
-            </p>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat vitae quos, modi facilis natus quae
-               at magni earum hic quibusdam, debitis fuga accusamus veritatis tempore voluptate, eaque placeat repudiandae rem!
-            </p>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat vitae quos, modi facilis natus quae
-               at magni earum hic quibusdam, debitis fuga accusamus veritatis tempore voluptate, eaque placeat repudiandae rem!
-            </p>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat vitae quos, modi facilis natus quae
-               at magni earum hic quibusdam, debitis fuga accusamus veritatis tempore voluptate, eaque placeat repudiandae rem!
-            </p>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat vitae quos, modi facilis natus quae
-               at magni earum hic quibusdam, debitis fuga accusamus veritatis tempore voluptate, eaque placeat repudiandae rem!
-            </p>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat vitae quos, modi facilis natus quae
-               at magni earum hic quibusdam, debitis fuga accusamus veritatis tempore voluptate, eaque placeat repudiandae rem!
-            </p>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat vitae quos, modi facilis natus quae
-               at magni earum hic quibusdam, debitis fuga accusamus veritatis tempore voluptate, eaque placeat repudiandae rem!
-            </p>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat vitae quos, modi facilis natus quae
-               at magni earum hic quibusdam, debitis fuga accusamus veritatis tempore voluptate, eaque placeat repudiandae rem!
-            </p>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat vitae quos, modi facilis natus quae
-               at magni earum hic quibusdam, debitis fuga accusamus veritatis tempore voluptate, eaque placeat repudiandae rem!
-            </p>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat vitae quos, modi facilis natus quae
-               at magni earum hic quibusdam, debitis fuga accusamus veritatis tempore voluptate, eaque placeat repudiandae rem!
-            </p>
+            {{ content }}
           </div>
         </a-col>
         <a-col :span="4">
           <div class="anchor">
-            <a-anchor :target-offset="targetOffset">
-              <a-anchor-link href="#components-anchor-demo-basic" title="Basic demo" />
-              <a-anchor-link href="#components-anchor-demo-static" title="Static demo" />
-              <a-anchor-link href="#API" title="API">
-                <a-anchor-link href="#Anchor-Props" title="Anchor Props" />
-                <a-anchor-link href="#Link-Props" title="Link Props" />
-              </a-anchor-link>
+            <a-anchor>
+              <a-anchor-link href="#小标题1" title="小标题1" />
+              <a-anchor-link href="#小标题2" title="小标题2" />
+              <a-anchor-link href="#小标题3" title="小标题3" />
             </a-anchor>
           </div>
         </a-col>
@@ -93,6 +31,14 @@
   export default {
     name: 'post',
     components: { Menu },
+    async asyncData ({ $axios, route }) {
+      const res =  await $axios.post('/api/article-detail', { title : route.query.title})
+      const content = res?.data?.data?.content || ''
+
+      return  {
+        content
+      }
+    },
     data() {
       return {
         targetOffset: undefined,
