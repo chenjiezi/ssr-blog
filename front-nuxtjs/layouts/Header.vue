@@ -27,14 +27,15 @@
 <script>
 export default {
   name: 'Header',
-  data () {
-    return {
-      curMenu: [],
+  computed: {
+    curMenu : {
+      get () {
+        return this.$store.state.class.menuName
+      },
+      // 重写计算属性 curMenu 的 set 方法
+      set (n) { }
     }
-  },
-  mounted() {
-    this.curMenu = [this.$route.name]
-  },
+  }
 }
 </script>
 
