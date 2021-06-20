@@ -46,7 +46,6 @@
     },
     methods: {
       onChange (page) {
-        // TODO: 改进
         window.location.href = `/archive?page=${page}`
       }
     }
