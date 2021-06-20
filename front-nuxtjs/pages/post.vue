@@ -15,9 +15,12 @@
         <a-col :span="4">
           <div class="anchor">
             <a-anchor>
-              <a-anchor-link href="#小标题1" title="小标题1" />
-              <a-anchor-link href="#小标题2" title="小标题2" />
-              <a-anchor-link href="#小标题3" title="小标题3" />
+              <a-anchor-link
+                v-for="t of anchors"
+                :key="t"
+                :href="`#${t}`"
+                :title="t"
+              />
             </a-anchor>
           </div>
         </a-col>
@@ -34,19 +37,13 @@
     async asyncData ({ $axios, route }) {
       const res =  await $axios.post('/api/article-detail', { title : route.query.title})
       const content = res?.data?.data?.content || ''
+      const anchors = res?.data?.data?.anchors || []
 
       return  {
-        content
+        content,
+        anchors
       }
-    },
-    data() {
-      return {
-        targetOffset: undefined,
-      };
-    },
-    mounted() {
-      this.targetOffset = window.innerHeight / 2;
-    },
+    }
   }
 </script>
 
