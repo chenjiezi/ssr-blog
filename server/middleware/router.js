@@ -1,7 +1,7 @@
 const path = require('path')
 const Mock = require('mockjs')
-
 const Router = require('koa-router')
+
 const router = new Router()
 
 router.get('/', async (ctx) => {
@@ -22,13 +22,9 @@ router.get('/api/menu', async (ctx) => {
 })
 
 // 文章列表
-router.get('/api/article', async (ctx) => {
-
-  console.log('ctx.request.url:', ctx.request.url)
-
-  let url = ctx.request.url
-  let params = url.split('?')[1] || ''
-  let curPage = +params.split('=')[1] || 1
+router.post('/api/article', async (ctx) => {
+  const params = ctx.request.body
+  let curPage = params.page
   let pageSize = 10
   let total = 888
 
@@ -44,7 +40,13 @@ router.get('/api/article', async (ctx) => {
 })
 
 // 文章详情
-// router.get('/api/article-detail', async (ctx) => {})
+router.post('/api/article-detail', async (ctx) => {
+  const { title } = ctx.request.body
+  
+  ctx.response.body = resBody({
+    content: `${title} - content`
+  })
+})
 
 function resBody (data, code = 200, message = 'success') {
   return JSON.stringify({
@@ -86,6 +88,5 @@ function t (curPage, total, pageSize) {
 
   return pageSize
 }
-
 
 module.exports = router
