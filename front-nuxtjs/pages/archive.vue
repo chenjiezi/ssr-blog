@@ -6,7 +6,7 @@
         <ul class="list">
           <li class="item" v-for="article of articleList" :key="article.id">
             <div class="title">
-              <router-link :to="'/post?t=' + article.path" >{{article.title}}</router-link>
+              <NuxtLink :to="'/post?title=' + article.path" >{{article.title}}</NuxtLink>
             </div>
             <div class="date">{{article.dateTime}}</div>
           </li>
@@ -31,7 +31,7 @@
   export default {
     name: 'archive',
     async asyncData ({ $axios, route }) {
-      let res = await $axios.get('/api/article', { params: route.query })
+      let res = await $axios.post('/api/article', { page: parseInt(route.query.page) })
       let articleList = res.data.data.articleList || []
       let curPage = res.data.data.curPage || 1
       let pageSize = 10
