@@ -3,7 +3,7 @@ log.level = 'info';
 
 module.exports = async (ctx, next) => {
   const { request } = ctx
-  log.info(`${ request.method } : ${ request.url } : ${ JSON.stringify(request.body) }`)
+  log.info(`${ request.method } | ${ request.url } | ${ JSON.stringify(request.body) }`)
 
   await next()
 }
