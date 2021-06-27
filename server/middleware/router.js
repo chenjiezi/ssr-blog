@@ -9,6 +9,19 @@ router.get('/', async (ctx) => {
   ctx.body = '<h1>你好，菜鸟！</h1>'
 })
 
+const ln = 'admin'
+const pw = '123456'
+
+// 登录
+router.post('/api/login', async (ctx) => {
+  const { loginname, password } = ctx.request.body
+  if (loginname === ln && password === pw) {
+    ctx.response.body = resBody({ token: 'asdiu2h08d029nd' }, '登录成功!')
+  } else {
+    ctx.response.body = resBody({}, 201, '账号或密码错误!')
+  }
+})
+
 // 文章目录
 router.get('/api/menu', async (ctx) => {
   const filePath = path.join(__dirname, '../mock/menu.js')
@@ -67,6 +80,9 @@ function mockList (pageSize) {
       dateTime: '@date',
       summary: '@cparagraph(5)',
       path: 'bi-bao',
+      anchor: ['标题1', '标题2', '标题3'],
+      status: 1,
+      cover: '', 
       remark: ''
     }))
   }
