@@ -14,9 +14,9 @@ const pw = '123456'
 
 // 登录
 router.post('/api/login', async (ctx) => {
-  const { loginname, password } = ctx.request.body
-  if (loginname === ln && password === pw) {
-    ctx.response.body = resBody({ token: 'asdiu2h08d029nd' }, '登录成功!')
+  const { username, password } = ctx.request.body
+  if (username === ln && password === pw) {
+    ctx.response.body = resBody({ token: 'asdiu2h08d029nd' }, 200, '登录成功!')
   } else {
     ctx.response.body = resBody({}, 201, '账号或密码错误!')
   }
