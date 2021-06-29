@@ -35,7 +35,7 @@
     name: 'post',
     components: { Menu },
     async asyncData ({ $axios, route }) {
-      const res =  await $axios.post('/api/article-detail', { title : route.query.title})
+      const res =  await $axios.post('/api/article/detail', { title : route.query.title})
       const content = res?.data?.data?.content || ''
       const anchors = res?.data?.data?.anchors || []
 
