@@ -23,13 +23,13 @@
     components: { Menu },
     name: 'note',
     async asyncData ({ $axios }) {
-      const res =  await $axios.post('/api/article-detail', { title : 'note'})
+      const res =  await $axios.post('/api/article/detail', { title : 'note'})
       const content = res?.data?.data?.content || ''
 
       return  {
         content
       }
-    },
+    }
   }
 </script>
 
