@@ -38,7 +38,7 @@ router.get('/api/menu', async (ctx) => {
 router.post('/api/article', async (ctx) => {
   const params = ctx.request.body
   let curPage = params.page
-  let pageSize = 10
+  let pageSize = params.limit || 10
   let total = 888
 
   pageSize = t(curPage - 1, total, pageSize)
@@ -47,17 +47,19 @@ router.post('/api/article', async (ctx) => {
   ctx.response.body = resBody({
     articleList: articleList,
     curPage,
-    pageSize,
     total
   })
 })
 
 // 文章详情
-router.post('/api/article-detail', async (ctx) => {
+router.post('/api/article/detail', async (ctx) => {
   const { title } = ctx.request.body
   
   ctx.response.body = resBody({
-    content: `${title} - content`,
+      id: '@id',
+      content: `${title} - content`,
+    dateTime: '@date',
+    summary: '@cparagraph(5)',
     anchors: ['小标题A', '小标题B', '小标题C', '小标题D']
   })
 })
@@ -81,7 +83,7 @@ function mockList (pageSize) {
       summary: '@cparagraph(5)',
       path: 'bi-bao',
       anchor: ['标题1', '标题2', '标题3'],
-      status: 1,
+      status: 'draft',
       cover: '', 
       remark: ''
     }))
