@@ -23,8 +23,8 @@
             <div class="postInfo-container">
               <el-row>
                 <el-col :span="10">
-                  <el-form-item label-width="120px" label="创建日期:" class="postInfo-container-item">
-                    <el-date-picker v-model="displayTime" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="选择日期" />
+                  <el-form-item label="创建日期:" class="postInfo-container-item">
+                    <el-date-picker v-model="postForm.createTime" type="datetime" value-format="yyyy-MM-dd HH:mm:ss" format="yyyy-MM-dd HH:mm:ss" placeholder="选择日期" />
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -58,11 +58,11 @@ import { fetchArticle } from '@/api/article'
 
 const defaultForm = {
   status: 'draft',
-  title: '', // 文章题目
-  content: '', // 文章内容
+  title: '',         // 文章题目
+  content: '',       // 文章内容
   content_short: '', // 文章摘要
-  image_uri: '', // 文章图片
-  display_time: undefined, // 前台展示时间
+  image_uri: '',     // 文章图片
+  createTime: '',    // 文章创建时间
   id: undefined,
 }
 
@@ -95,25 +95,12 @@ export default {
         // image_uri: [{ validator: validateRequire }],
         title: [{ validator: validateRequire }],
         // content: [{ validator: validateRequire }],
-      },
-      tempRoute: {}
+      }
     }
   },
   computed: {
     contentShortLength() {
       return this.postForm.content_short.length
-    },
-    displayTime: {
-      // set and get is useful when the data
-      // returned by the back end api is different from the front end
-      // back end return => "2013-06-25 06:59:25"
-      // front end need timestamp => 1372114765000
-      get() {
-        return (+new Date(this.postForm.display_time))
-      },
-      set(val) {
-        this.postForm.display_time = new Date(val)
-      }
     }
   },
   created() {
@@ -121,11 +108,6 @@ export default {
       const id = this.$route.params && this.$route.params.id
       this.fetchData(id)
     }
-
-    // Why need to make a copy of this.$route here?
-    // Because if you enter this page and quickly switch tag, may be in the execution of the setTagsViewTitle function, this.$route is no longer pointing to the current page
-    // https://github.com/PanJiaChen/vue-element-admin/issues/1221
-    this.tempRoute = Object.assign({}, this.$route)
   },
   methods: {
     fetchData(id) {
@@ -136,26 +118,17 @@ export default {
         this.postForm.title += `   Article Id:${this.postForm.id}`
         this.postForm.content_short += `   Article Id:${this.postForm.id}`
 
-        // set tagsview title
-        this.setTagsViewTitle()
-
         // set page title
         this.setPageTitle()
       }).catch(err => {
         console.log(err)
       })
     },
-    setTagsViewTitle() {
-      const title = 'Edit Article'
-      const route = Object.assign({}, this.tempRoute, { title: `${title}-${this.postForm.id}` })
-      this.$store.dispatch('tagsView/updateVisitedView', route)
-    },
     setPageTitle() {
       const title = 'Edit Article'
       document.title = `${title} - ${this.postForm.id}`
     },
     submitForm() {
-      console.log(this.postForm)
       this.$refs.postForm.validate(valid => {
         if (valid) {
           this.loading = true
@@ -166,6 +139,7 @@ export default {
             duration: 2000
           })
           this.postForm.status = 'published'
+          console.log('发布:', this.postForm)
           this.loading = false
         } else {
           console.log('error submit!!')
@@ -188,6 +162,7 @@ export default {
         duration: 1000
       })
       this.postForm.status = 'draft'
+      console.log('草稿:', this.postForm)
     }
   }
 }
