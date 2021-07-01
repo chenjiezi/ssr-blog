@@ -10,23 +10,15 @@ export function fetchList(data) {
 
 export function fetchArticle(id) {
   return request({
-    url: '/vue-admin-template/article/detail',
+    url: '/article/detail',
     method: 'get',
     params: { id }
   })
 }
 
-export function fetchPv(pv) {
-  return request({
-    url: '/vue-admin-template/article/pv',
-    method: 'get',
-    params: { pv }
-  })
-}
-
 export function createArticle(data) {
   return request({
-    url: '/vue-admin-template/article/create',
+    url: '/article/create',
     method: 'post',
     data
   })
@@ -34,7 +26,7 @@ export function createArticle(data) {
 
 export function updateArticle(data) {
   return request({
-    url: '/vue-admin-template/article/update',
+    url: '/article/update',
     method: 'post',
     data
   })
