@@ -1,6 +1,7 @@
 const path = require('path')
 const Mock = require('mockjs')
 const Router = require('koa-router')
+import { resBody, getUrlParams } from '../util/utils'
 
 const router = new Router()
 
@@ -35,7 +36,7 @@ router.get('/api/menu', async (ctx) => {
 })
 
 // 文章列表
-router.post('/api/article', async (ctx) => {
+router.post('/api/article/list', async (ctx) => {
   const params = ctx.request.body
   let curPage = params.page
   let pageSize = params.limit || 10
@@ -56,21 +57,28 @@ router.post('/api/article/detail', async (ctx) => {
   const { title } = ctx.request.body
   
   ctx.response.body = resBody({
-      id: '@id',
-      content: `${title} - content`,
+    id: '@id',
+    content: `${title} - content`,
     dateTime: '@date',
     summary: '@cparagraph(5)',
     anchors: ['小标题A', '小标题B', '小标题C', '小标题D']
   })
 })
 
-function resBody (data, code = 200, message = 'success') {
-  return JSON.stringify({
-    code: code,
-    message: message,
-    data: data
-  })
-}
+// 文章创建
+router.post('/api/article/create', async (ctx) => {
+  
+})
+
+// 文章编辑
+router.put('/api/article/edit', async (ctx) => {
+  
+})
+
+// 文章删除
+router.get('/api/article/delete', async (ctx) => {
+  
+})
 
 // mock articleList
 function mockList (pageSize) {
