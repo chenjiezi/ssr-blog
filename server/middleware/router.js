@@ -1,7 +1,7 @@
 const path = require('path')
 const Mock = require('mockjs')
 const Router = require('koa-router')
-import { resBody, getUrlParams } from '../util/utils'
+const utils = require('../utils/utils')
 
 const router = new Router()
 
@@ -17,103 +17,97 @@ const pw = '123456'
 router.post('/api/login', async (ctx) => {
   const { username, password } = ctx.request.body
   if (username === ln && password === pw) {
-    ctx.response.body = resBody({ token: 'asdiu2h08d029nd' }, 200, '登录成功!')
+    ctx.response.body = utils.resBody({ token: 'asdiu2h08d029nd' }, 200, '登录成功!')
   } else {
-    ctx.response.body = resBody({}, 201, '账号或密码错误!')
+    ctx.response.body = utils.resBody({}, 201, '账号或密码错误!')
   }
 })
 
 // 文章目录
 router.get('/api/menu', async (ctx) => {
-  const filePath = path.join(__dirname, '../mock/menu.js')
 
-  try {
-    const menuList = await require(filePath)
-    ctx.response.body = resBody({ menuList })
-  } catch (error) {
-    ctx.response.body = JSON.stringify(error)
-  }
+  const data = utils.operationFile('../mock/menu.json')
+
+  ctx.response.body = utils.resBody({
+    data: { 
+      menuList: data
+    }
+  })
+
 })
 
 // 文章列表
 router.post('/api/article/list', async (ctx) => {
-  const params = ctx.request.body
-  let curPage = params.page
-  let pageSize = params.limit || 10
-  let total = 888
+  const { currentPage = 1, pageSize = 10 } = ctx.request.body
 
-  pageSize = t(curPage - 1, total, pageSize)
-  const articleList = mockList(pageSize)
+  const data = utils.operationFile('../mock/article.json')
+  const total = data.length
+  const dataList = data.slice((pageSize - 1) * currentPage, pageSize * currentPage + 1)
 
-  ctx.response.body = resBody({
-    articleList: articleList,
-    curPage,
-    total
+  ctx.response.body = utils.resBody({
+    data: {
+      data: dataList,
+      total,
+      currentPage,
+      pageSize
+    }
   })
+
 })
 
 // 文章详情
 router.post('/api/article/detail', async (ctx) => {
-  const { title } = ctx.request.body
+  const { id } = ctx.request.body
   
-  ctx.response.body = resBody({
-    id: '@id',
-    content: `${title} - content`,
-    dateTime: '@date',
-    summary: '@cparagraph(5)',
-    anchors: ['小标题A', '小标题B', '小标题C', '小标题D']
-  })
+  let data = utils.operationFile('../mock/article.json')
+  data = data.find(item => item.id === id) || {}
+
+  ctx.response.body = utils.resBody({ data })
+  
 })
 
 // 文章创建
 router.post('/api/article/create', async (ctx) => {
-  
+  const article = ctx.request.body
+
+  utils.operationFile('../mock/article.json', (data) => {
+    // id 自增
+    const id = data.length + 1
+    article.id = id
+
+    data.push(article)
+    return data
+  })
+
+  ctx.response.body = utils.resBody({ message: '创建文章成功' })
 })
 
 // 文章编辑
 router.put('/api/article/edit', async (ctx) => {
-  
+  const article = ctx.request.body
+
+  utils.operationFile('../mock/article.json', (data) => {
+    data.forEach((item, index, arr) => {
+      if (item.id === article.id) {
+        arr[index] = article
+      }
+    })
+    return data
+  })
+
+  ctx.response.body = utils.resBody({ message: '编辑文章成功' })
 })
 
 // 文章删除
-router.get('/api/article/delete', async (ctx) => {
-  
+router.delete('/api/article/delete', async (ctx) => {
+  const { id } = ctx.request.body
+
+  utils.operationFile('../mock/article.json', (data) => {
+    return data.filter(item => item.id !== id)
+  })
+
+  ctx.response.body = utils.resBody({ message: '删除文章成功' })
+
 })
-
-// mock articleList
-function mockList (pageSize) {
-  const result = []
-  for (let i = 0; i < pageSize; i++) {
-    result.push(Mock.mock({
-      id: '@id',
-      title: '@ctitle(20, 50)',
-      dateTime: '@date',
-      summary: '@cparagraph(5)',
-      path: 'bi-bao',
-      anchor: ['标题1', '标题2', '标题3'],
-      status: 'draft',
-      cover: '', 
-      remark: ''
-    }))
-  }
-
-  return result
-}
-
-// 计算当前页的 pageSize
-function t (curPage, total, pageSize) {
-  let q = curPage * pageSize,
-    s = q + pageSize
-
-  if (q < total) {
-    if (s >= total) {
-      pageSize = total - q
-    }
-  } else {
-    pageSize = 0
-  }
-
-  return pageSize
-}
 
 module.exports = router
