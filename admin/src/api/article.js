@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function fetchList(data) {
   return request({
-    url: '/api/article',
+    url: '/api/article/list',
     method: 'post',
     data
   })
@@ -10,24 +10,24 @@ export function fetchList(data) {
 
 export function fetchArticle(id) {
   return request({
-    url: '/article/detail',
-    method: 'get',
-    params: { id }
+    url: '/api/article/detail',
+    method: 'post',
+    data: { id }
   })
 }
 
 export function createArticle(data) {
   return request({
-    url: '/article/create',
+    url: '/api/article/create',
     method: 'post',
     data
   })
 }
 
-export function updateArticle(data) {
+export function editArticle(data) {
   return request({
-    url: '/article/update',
-    method: 'post',
+    url: '/api/article/edit',
+    method: 'put',
     data
   })
 }
