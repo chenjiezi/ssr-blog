@@ -54,7 +54,7 @@ import Tinymce from '@/components/Tinymce'
 import Upload from '@/components/Upload/SingleImage3'
 import MDinput from '@/components/MDinput'
 import Sticky from '@/components/Sticky' // 粘性header组件
-import { fetchArticle } from '@/api/article'
+import { fetchArticle, createArticle, editArticle } from '@/api/article'
 
 const defaultForm = {
   status: 'draft',
@@ -114,10 +114,6 @@ export default {
       fetchArticle(id).then(response => {
         this.postForm = response.data
 
-        // just for test
-        this.postForm.title += `   Article Id:${this.postForm.id}`
-        this.postForm.content_short += `   Article Id:${this.postForm.id}`
-
         // set page title
         this.setPageTitle()
       }).catch(err => {
@@ -126,27 +122,44 @@ export default {
     },
     setPageTitle() {
       const title = 'Edit Article'
-      document.title = `${title} - ${this.postForm.id}`
+      document.title = `${title} - id：${this.postForm.id}`
     },
+    // 发布 published
     submitForm() {
       this.$refs.postForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$notify({
-            title: '成功',
-            message: '发布文章成功',
-            type: 'success',
-            duration: 2000
-          })
           this.postForm.status = 'published'
-          console.log('发布:', this.postForm)
-          this.loading = false
+
+          if (this.postForm.id) { // 编辑文章的提交
+            editArticle(this.postForm).then(res => {
+              this.$notify({
+                title: '成功',
+                message: '发布文章成功',
+                type: 'success',
+                duration: 2000
+              })
+              this.loading = false
+            })
+          } else { // 创建文章的提交
+            createArticle(this.postForm).then(res => {
+              this.$notify({
+                title: '成功',
+                message: '发布文章成功',
+                type: 'success',
+                duration: 2000
+              })
+              this.loading = false
+            })
+          }
+          this.$router.push('/list')
         } else {
           console.log('error submit!!')
           return false
         }
       })
     },
+    // 保存为草稿 draft
     draftForm() {
       if (this.postForm.content.length === 0 || this.postForm.title.length === 0) {
         this.$message({
@@ -155,14 +168,29 @@ export default {
         })
         return
       }
-      this.$message({
-        message: '保存成功',
-        type: 'success',
-        showClose: true,
-        duration: 1000
-      })
       this.postForm.status = 'draft'
-      console.log('草稿:', this.postForm)
+      if (this.postForm.id) { // 编辑文章的提交
+        editArticle(this.postForm).then(res => {
+          this.$notify({
+            title: '成功',
+            message: '保存成功',
+            type: 'success',
+            duration: 1000
+          })
+          this.loading = false
+        })
+      } else { // 创建文章的提交
+        createArticle(this.postForm).then(res => {
+          this.$notify({
+            title: '成功',
+            message: '保存成功',
+            type: 'success',
+            duration: 1000
+          })
+          this.loading = false
+        })
+      }
+      this.$router.push('/list')
     }
   }
 }

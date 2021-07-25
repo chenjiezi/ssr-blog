@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
-    <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
-      <el-table-column align="center" label="ID">
+    <el-table v-loading="listLoading" :data="list" size="mini" border fit highlight-current-row style="width: 100%">
+      <el-table-column  min-width="20px" align="center" label="ID">
         <template slot-scope="scope">
           <span>{{ scope.row.id }}</span>
         </template>
@@ -9,7 +9,7 @@
 
       <el-table-column width="180px" align="center" label="Date">
         <template slot-scope="scope">
-          <span>{{ scope.row.dateTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ scope.row.createTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
 
@@ -33,8 +33,8 @@
     <pagination
       v-show="total>0"
       :total="total"
-      :page.sync="listQuery.page"
-      :limit.sync="listQuery.limit"
+      :page.sync="listQuery.currentPage"
+      :limit.sync="listQuery.pageSize"
       @pagination="getList"
     />
   </div>
@@ -63,20 +63,21 @@ export default {
       total: 0,
       listLoading: true,
       listQuery: {
-        page: 1,
-        limit: 20
+        currentPage: 1,
+        pageSize: 2
       }
     }
   },
-  created() {
+  mounted() {
     this.getList()
   },
   methods: {
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
-        this.list = response.data.articleList
+        this.list = response.data.data
         this.total = response.data.total
+      }).finally(() => {
         this.listLoading = false
       })
     }
