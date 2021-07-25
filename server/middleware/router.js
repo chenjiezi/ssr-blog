@@ -17,7 +17,9 @@ const pw = '123456'
 router.post('/api/login', async (ctx) => {
   const { username, password } = ctx.request.body
   if (username === ln && password === pw) {
-    ctx.response.body = utils.resBody({ token: 'asdiu2h08d029nd' }, 200, '登录成功!')
+    ctx.response.body = utils.resBody({ data: {
+      token: 'asdiu2h08d029nd'
+    } })
   } else {
     ctx.response.body = utils.resBody({}, 201, '账号或密码错误!')
   }
@@ -28,11 +30,9 @@ router.get('/api/menu', async (ctx) => {
 
   const data = utils.operationFile('../mock/menu.json')
 
-  ctx.response.body = utils.resBody({
-    data: { 
-      menuList: data
-    }
-  })
+  ctx.response.body = utils.resBody({ data: { 
+    menuList: data
+  }})
 
 })
 
@@ -42,7 +42,7 @@ router.post('/api/article/list', async (ctx) => {
 
   const data = utils.operationFile('../mock/article.json')
   const total = data.length
-  const dataList = data.slice((pageSize - 1) * currentPage, pageSize * currentPage + 1)
+  const dataList = data.slice((currentPage - 1) * pageSize, pageSize * currentPage)
 
   ctx.response.body = utils.resBody({
     data: {
@@ -73,9 +73,9 @@ router.post('/api/article/create', async (ctx) => {
   utils.operationFile('../mock/article.json', (data) => {
     // id 自增
     const id = data.length + 1
-    article.id = id
+    article.id = id + ""
 
-    data.push(article)
+    data.unshift(article)
     return data
   })
 
