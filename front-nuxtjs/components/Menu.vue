@@ -65,7 +65,7 @@
         let data = res?.data?.data?.menuList || []
         this.treeData = handleData(data)
         
-        // 初始化目录当前节点高亮
+        // TODO:初始化目录当前节点高亮
         const { query } = this.$route
         this.selectedKeys = query.title ? [query.title] : []
 
@@ -96,7 +96,7 @@
         // 重定向路由
         if (dataRef.hasContent) {
           if (this.$route.query.title !== dataRef.key) {
-            window.location.href = '/post?title=' + dataRef.key
+            window.location.href = '/post?id=' + dataRef.id
           }
         }
         

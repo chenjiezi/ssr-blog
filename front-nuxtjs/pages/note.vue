@@ -8,9 +8,8 @@
           </div>
         </a-col>
         <a-col :span="20">
-          <div class="content">
-            {{ content }}
-          </div>
+          <h1>笔记总结</h1>
+          <div class="content" v-html="contentHtml"></div>
         </a-col>
       </a-row>
     </div>
@@ -19,16 +18,76 @@
 
 <script>
   import Menu from '@/components/Menu.vue';
+  function noteContent (data) {
+    const htmlStr = t1(data)
+
+    function t1 (data) {
+      let t1Str = ''
+      
+      data.forEach(item => {
+        let itemChildStr = ''
+
+        if (item?.children?.length > 0) {
+          itemChildStr += t2(item.children)
+        }
+
+        t1Str += `
+          <details>
+            <summary>${ item.title }</summary>
+            ${ itemChildStr }
+          </details>
+        `
+      })
+
+      return t1Str
+    }
+
+    function t2 (childs) {
+      let childHtmlStr = ''
+
+      childs.forEach(child => {
+        let ccHtmlStr = ''
+
+        if (child?.children?.length > 0) {
+          ccHtmlStr += t2(child.children)
+        }
+
+        childHtmlStr += `
+          <li>
+            ${child.title}
+            ${ ccHtmlStr }
+          </li>
+        `
+      })
+      
+      return `
+        <ul>
+          ${ childHtmlStr }
+        </ul>
+      `
+    }
+
+    return htmlStr
+  }
   export default {
     components: { Menu },
     name: 'note',
     async asyncData ({ $axios }) {
-      const res =  await $axios.post('/api/article/detail', { title : 'note'})
-      const content = res?.data?.data?.content || ''
-
+      /**
+       * 获取文章索引列表数据 data
+       * 编写一个 html 模板
+       * 遍历 data 插入到 html 模板中
+       * 将模板渲染到页面 appendChild
+       */
+      const res =  await $axios.get('/api/menu')
+      const content = res.data.data.menuList || []
+      const contentHtml = content.length > 0 ? noteContent(content) : ''
       return  {
-        content
+        contentHtml
       }
+    },
+    mounted () {
+      document.title = '笔记总结'
     }
   }
 </script>

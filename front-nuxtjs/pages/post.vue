@@ -8,9 +8,8 @@
           </div>
         </a-col>
         <a-col :span="16">
-          <div class="content">
-            {{ content }}
-          </div>
+          <h1>{{ title }}</h1>
+          <div class="content" v-html="content"></div>
         </a-col>
         <a-col :span="4">
           <div class="anchor">
@@ -35,13 +34,15 @@
     name: 'post',
     components: { Menu },
     async asyncData ({ $axios, route }) {
-      const res =  await $axios.post('/api/article/detail', { title : route.query.title})
+      const res =  await $axios.post('/api/article/detail', { id : route.query.id})
       const content = res?.data?.data?.content || ''
       const anchors = res?.data?.data?.anchors || []
+      const title = res?.data?.data?.title || ''
 
       return  {
         content,
-        anchors
+        anchors,
+        title
       }
     }
   }

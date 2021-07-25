@@ -6,7 +6,7 @@
         <ul class="list">
           <li class="item" v-for="article of articleList" :key="article.id">
             <div class="title">
-              <NuxtLink :to="'/post?title=' + article.path" >{{article.title}}</NuxtLink>
+              <NuxtLink :to="'/post?id=' + article.id" >{{article.title}}</NuxtLink>
             </div>
             <div class="date">{{article.dateTime}}</div>
           </li>
@@ -15,7 +15,7 @@
         <div class="pagination">
           <a-pagination
             @change="onChange"
-            :current="curPage"
+            :current="currentPage"
             :pageSize="pageSize"
             :total="total" />
         </div>
@@ -31,15 +31,15 @@
   export default {
     name: 'archive',
     async asyncData ({ $axios, route }) {
-      let res = await $axios.post('/api/article', { page: parseInt(route.query.page) })
-      let articleList = res.data.data.articleList || []
-      let curPage = res.data.data.curPage || 1
       let pageSize = 10
+      let res = await $axios.post('/api/article/list', { currentPage: parseInt(route.query.page), pageSize })
+      let articleList = res.data.data.data || []
+      let currentPage = res.data.data.currentPage || 1
       let total = res.data.data.total || -1
       
       return  {
         articleList,
-        curPage,
+        currentPage,
         pageSize,
         total
       }
