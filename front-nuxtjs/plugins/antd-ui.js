@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import antDesign from 'ant-design-vue/lib'
 
 import {
   Icon,
