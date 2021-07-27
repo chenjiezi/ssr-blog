@@ -31,3 +31,11 @@ export function editArticle(data) {
     data
   })
 }
+
+export function deleteArticle(data) {
+  return request({
+    url: '/api/article/delete',
+    method: 'post',
+    data
+  })
+}

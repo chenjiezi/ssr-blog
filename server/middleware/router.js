@@ -99,7 +99,7 @@ router.put('/api/article/edit', async (ctx) => {
 })
 
 // 文章删除
-router.delete('/api/article/delete', async (ctx) => {
+router.post('/api/article/delete', async (ctx) => {
   const { id } = ctx.request.body
 
   utils.operationFile('../mock/article.json', (data) => {
