@@ -41,6 +41,10 @@
           <Tinymce ref="editor" v-model="postForm.content" :height="400" />
         </el-form-item>
 
+        <el-form-item prop="remark" label="备注" style="margin-bottom: 30px;">
+          <el-input type="textarea" placeholder="备注" v-model="postForm.remark"></el-input>
+        </el-form-item>
+
         <el-form-item prop="image_uri" style="margin-bottom: 30px;">
           <Upload v-model="postForm.image_uri" />
         </el-form-item>
@@ -63,6 +67,7 @@ const defaultForm = {
   content_short: '', // 文章摘要
   image_uri: '',     // 文章图片
   createTime: '',    // 文章创建时间
+  remark: '',        // 备注
   id: undefined,
 }
 
