@@ -61,7 +61,7 @@
     },
     beforeMount () {
       // 获取文章目录列表
-      this.$axios.get('/api/menu').then(res => {
+      this.$axios.get('/api/menu/list').then(res => {
         let data = res?.data?.data?.menuList || []
         this.treeData = handleData(data)
         
