@@ -18,10 +18,9 @@
 
 <script>
   import Menu from '@/components/Menu.vue';
-  function noteContent (data) {
-    const htmlStr = t1(data)
+  function noteContentRender (data) {
 
-    function t1 (data) {
+    const t1 = (data) => {
       let t1Str = ''
       
       data.forEach(item => {
@@ -42,7 +41,7 @@
       return t1Str
     }
 
-    function t2 (childs) {
+    const t2 = (childs) => {
       let childHtmlStr = ''
 
       childs.forEach(child => {
@@ -67,21 +66,15 @@
       `
     }
 
-    return htmlStr
+    return t1(data)
   }
   export default {
     components: { Menu },
     name: 'note',
     async asyncData ({ $axios }) {
-      /**
-       * 获取文章索引列表数据 data
-       * 编写一个 html 模板
-       * 遍历 data 插入到 html 模板中
-       * 将模板渲染到页面 appendChild
-       */
       const res =  await $axios.get('/api/menu')
-      const content = res.data.data.menuList || []
-      const contentHtml = content.length > 0 ? noteContent(content) : ''
+      const menuList = res.data.data.menuList || []
+      const contentHtml = menuList.length > 0 ? noteContentRender(menuList) : ''
       return  {
         contentHtml
       }
