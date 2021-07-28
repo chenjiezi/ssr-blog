@@ -1,6 +1,6 @@
 const Koa = require('koa')
 const app = new Koa()
-const router = require('./middleware/router')
+const router = require('./router')
 const log = require('log4js').getLogger('server')
 const bodyParser = require('koa-bodyparser')
 const respDurationMiddleware = require('./middleware/duration')
