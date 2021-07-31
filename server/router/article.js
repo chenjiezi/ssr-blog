@@ -2,10 +2,10 @@ const utils = require('../utils/utils')
 
 // 文章列表
 const articleList = {
-  method: 'post',
+  method: 'get',
   path: '/article/list',
   fn: (ctx) => {
-    const { currentPage = 1, pageSize = 10 } = ctx.request.body
+    const { currentPage = 1, pageSize = 10 } = utils.getUrlParams(ctx.request.url)
   
     const data = utils.operationFile('../mock/article.json')
     const total = data.length
@@ -24,10 +24,10 @@ const articleList = {
 
 // 文章详情
 const articleDetail = {
-  method: 'post',
+  method: 'get',
   path: '/article/detail',
   fn: (ctx) => {
-    const { id } = ctx.request.body
+    const { id } = utils.getUrlParams(ctx.request.url)
     
     let data = utils.operationFile('../mock/article.json')
     data = data.find(item => item.id === id) || {}
@@ -79,20 +79,19 @@ const articleEdit = {
 
 // 文章删除
 const articleDelete = {
-  method: 'post',
+  method: 'delete',
   path: '/article/delete',
   fn: (ctx) => {
-    const { id } = ctx.request.body
+    const { id } = utils.getUrlParams(ctx.request.url)
 
     utils.operationFile('../mock/article.json', (data) => {
       return data.filter(item => item.id !== id)
     })
 
-    ctx.response.body = utils.resBody({ message: '删除文章成功' })
+    ctx.response.body = utils.resBody({ message: '删除成功' })
 
   }
 }
-
 
 module.exports = [
   articleList,
