@@ -48,7 +48,7 @@ const menuEdit = {
     saveData((data) => {
       data.forEach((item, index, arr) => {
         if (item.id === menuData.id) {
-          arr[index] = menuData
+          arr[index] = Object.assign(arr[index], menuData)
         }
       })
       return data
