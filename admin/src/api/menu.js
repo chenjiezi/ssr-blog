@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function fecthMenuList (params) {
+export function fetchMenuList (params) {
   return request({
     url: '/api/menu/list',
     method: 'get',
