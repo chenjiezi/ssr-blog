@@ -48,6 +48,7 @@ const menuEdit = {
     saveData((data) => {
       data.forEach((item, index, arr) => {
         if (item.id === menuData.id) {
+          // 只编辑修改的变量
           arr[index] = Object.assign(arr[index], menuData)
         }
       })
