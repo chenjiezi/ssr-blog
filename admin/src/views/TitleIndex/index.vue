@@ -1,5 +1,4 @@
-
-  <template>
+<template>
   <div class="container">
     <el-button
       size="small"
@@ -15,14 +14,8 @@
       default-expand-all
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
       <el-table-column
-        prop="id"
-        label="ID"
-        width="180">
-      </el-table-column>
-      <el-table-column
         prop="title"
-        label="标题"
-         width="180">
+        label="索引">
       </el-table-column>
       <el-table-column
         prop="articleTitle"
@@ -30,7 +23,17 @@
       </el-table-column>
       <el-table-column
         prop="hasContent"
-        label="是否展示">
+        align="center"
+        label="是否点击跳转"
+        width="100">
+        <template slot-scope="{ row }">
+          <el-switch
+            v-model="row.hasContent"
+            @change="handleHasContent(row)"
+            active-color="#13ce66"
+            inactive-color="#ccc">
+          </el-switch>
+        </template>
       </el-table-column>
       <el-table-column
         prop="remark"
@@ -52,17 +55,53 @@
         </template>
       </el-table-column>
     </el-table>
+
+    <el-dialog
+      title="弹框"
+      :visible.sync="isDialogVisible"
+      width="40%"
+      center>
+      <el-form ref="form" :model="form" label-width="100px">
+        <el-form-item label="索引">
+          <el-input v-model="form.title"></el-input>
+        </el-form-item>
+        <el-form-item label="文章">
+          <el-select v-model="form.articleId" placeholder="请选择活动区域">
+            <el-option label="区域一" value="shanghai"></el-option>
+            <el-option label="区域二" value="beijing"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="是否点击跳转">
+          <el-switch v-model="form.hasContent"></el-switch>
+        </el-form-item>
+        <el-form-item label="备注">
+          <el-input type="textarea" v-model="form.remark"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="onSubmit">保存</el-button>
+          <el-button @click="isDialogVisible = false">取消</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
+
   </div>
 </template>
 
 <script>
-  import { fecthMenuList } from '@/api/menu'
+  import { fecthMenuList, fecthMenu, createMenu, editMenu, deleteMenu } from '@/api/menu'
   
   export default {
     name: 'TitleIndex',
     data () {
       return {
-        menuList: []
+        form: {
+          title: '',
+          articleId: '',
+          hasContent: false,
+          remark: '',
+        },
+        menuList: [],
+        isDialogVisible: true
       }
     },
     mounted () {
@@ -71,7 +110,9 @@
       })
     },
     methods: {
+      onSubmit () {},
       handleCreateOne () {
+        this.isDialogVisible = true
         console.log('新增一级索引')
       },
       handleCreate (index, row) {
@@ -82,6 +123,9 @@
       },
       handleDelete (index, row) {
         console.log('删除 - index, row:', index, row)
+      },
+      handleHasContent ({ id, hasContent }) {
+        editMenu({ id, hasContent }) // 更新数据 hasContent 字段
       }
     }
   }
