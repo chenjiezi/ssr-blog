@@ -1,18 +1,18 @@
 import request from '@/utils/request'
 
-export function fetchList(data) {
+export function fetchList(params) {
   return request({
     url: '/api/article/list',
-    method: 'post',
-    data
+    method: 'get',
+    params
   })
 }
 
 export function fetchArticle(id) {
   return request({
     url: '/api/article/detail',
-    method: 'post',
-    data: { id }
+    method: 'get',
+    params: { id }
   })
 }
 
@@ -32,10 +32,10 @@ export function editArticle(data) {
   })
 }
 
-export function deleteArticle(data) {
+export function deleteArticle(params) {
   return request({
     url: '/api/article/delete',
-    method: 'post',
-    data
+    method: 'delete',
+    params
   })
 }
