@@ -5,9 +5,17 @@ const articleList = {
   method: 'get',
   path: '/article/list',
   fn: (ctx) => {
-    const { currentPage = 1, pageSize = 10 } = utils.getUrlParams(ctx.request.url)
+    const { currentPage = 1, pageSize = 10, queryString } = utils.getUrlParams(ctx.request.url)
   
-    const data = utils.operationFile('../mock/article.json')
+    let data = utils.operationFile('../mock/article.json')
+
+    // 筛选
+    if (queryString) {
+      data = data.filter(item => {
+        return item.title.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+      })
+    }
+
     const total = data.length
     const dataList = data.slice((currentPage - 1) * pageSize, pageSize * currentPage)
   
