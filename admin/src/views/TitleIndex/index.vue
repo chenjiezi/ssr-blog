@@ -66,10 +66,13 @@
           <el-input v-model="form.title"></el-input>
         </el-form-item>
         <el-form-item label="文章">
-          <el-select v-model="form.articleId" placeholder="请选择活动区域">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
-          </el-select>
+          <el-autocomplete
+            v-model="form.articleTitle"
+            :fetch-suggestions="querySearchAsync"
+            placeholder="请输入文章"
+            @select="handleSelect"
+            value-key="articleTitle"
+          ></el-autocomplete>
         </el-form-item>
         <el-form-item label="是否点击跳转">
           <el-switch v-model="form.hasContent"></el-switch>
@@ -88,29 +91,36 @@
 </template>
 
 <script>
-  import { fecthMenuList, fecthMenu, createMenu, editMenu, deleteMenu } from '@/api/menu'
+  import { fetchMenuList, fetchMenu, createMenu, editMenu, deleteMenu } from '@/api/menu'
+  import { fetchList } from '@/api/article'
   
+  const formData = {
+    id: undefined,
+    articleId: undefined,
+    articleTitle: '',
+    title: '',
+    hasContent: false,
+    remark: ''
+  }
+
   export default {
     name: 'TitleIndex',
     data () {
       return {
-        form: {
-          title: '',
-          articleId: '',
-          hasContent: false,
-          remark: '',
-        },
+        form: formData,
         menuList: [],
         isDialogVisible: true
       }
     },
     mounted () {
-      fecthMenuList().then(res => {
-        this.menuList = res.data.menuList
-      })
+      this.fetchMenuList()
+      this.fetchArticleList()
     },
     methods: {
-      onSubmit () {},
+      // 提交表单
+      onSubmit () {
+        console.log('this.form:', JSON.stringify(this.form, null, 2))
+      },
       handleCreateOne () {
         this.isDialogVisible = true
         console.log('新增一级索引')
@@ -126,6 +136,25 @@
       },
       handleHasContent ({ id, hasContent }) {
         editMenu({ id, hasContent }) // 更新数据 hasContent 字段
+      },
+      fetchMenuList () {
+        return fetchMenuList().then(res => {
+          this.menuList = res.data.menuList
+        })
+      },
+      fetchArticleList (params) {
+        return fetchList(params).then(res => {
+          return res.data.data.map(({ id, title }) => ({ articleId: id, articleTitle: title }))
+        })
+      },
+      // TODO: 
+      querySearchAsync(queryString, cb) {
+        this.fetchArticleList({ queryString }).then(data => {
+          cb(data)
+        })
+      },
+      handleSelect(item) {
+        this.form = Object.assign(this.form, item)
       }
     }
   }
