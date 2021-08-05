@@ -25,6 +25,8 @@ Object.keys(filters).forEach(key => {
 
 Vue.config.productionTip = false
 
+Vue.prototype.$message = ElementUI.Message
+
 new Vue({
   el: '#app',
   router,
