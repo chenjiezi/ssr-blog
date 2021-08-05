@@ -47,28 +47,37 @@
             @click="handleCreate(scope.$index, scope.row)">新增</el-button>
           <el-button
             size="mini"
+            style="margin-right:10px;"
             @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button
-            size="mini"
-            type="danger"
-            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            
+          <el-popconfirm
+            :title="dialogTitle"
+            @onConfirm="delData"
+          >
+            <el-button
+              size="mini"
+              type="danger"
+              @click="handleDelete(scope.$index, scope.row)" slot="reference">删除</el-button>
+          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
 
     <el-dialog
-      title="弹框"
+      :title="dialogTitle"
       :visible.sync="isDialogVisible"
-      width="40%"
+      @closed="closeDialog"
+      width="500px"
       center>
-      <el-form ref="form" :model="form" label-width="100px">
-        <el-form-item label="索引">
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+        <el-form-item label="索引" prop="title">
           <el-input v-model="form.title"></el-input>
         </el-form-item>
         <el-form-item label="文章">
           <el-autocomplete
             v-model="form.articleTitle"
             :fetch-suggestions="querySearchAsync"
+            style="width:100%;"
             placeholder="请输入文章"
             @select="handleSelect"
             value-key="articleTitle"
@@ -93,7 +102,7 @@
 <script>
   import { fetchMenuList, fetchMenu, createMenu, editMenu, deleteMenu } from '@/api/menu'
   import { fetchList } from '@/api/article'
-  
+
   const formData = {
     id: undefined,
     articleId: undefined,
@@ -107,37 +116,79 @@
     name: 'TitleIndex',
     data () {
       return {
-        form: formData,
+        dialogTitle: '弹框',
+        form: {...formData},
         menuList: [],
-        isDialogVisible: true
+        rules: {
+          title: [
+            { required: true, message: '请输入索引', trigger: 'blur' }
+          ]
+        },
+        isDialogVisible: false
       }
     },
     mounted () {
-      this.fetchMenuList()
+      this.loadData()
       this.fetchArticleList()
     },
     methods: {
       // 提交表单
       onSubmit () {
-        console.log('this.form:', JSON.stringify(this.form, null, 2))
+        this.$refs.form.validate((valid) => {
+          if (valid) {
+            const isEdit = this.form.id
+            if (isEdit) {
+              editMenu(this.form).then(res => {
+                this.$message.success(res.message)
+                this.loadData()
+                this.isDialogVisible = false
+              })
+            } else {
+              createMenu(this.form).then(res => {
+                this.$message.success(res.message)
+                this.loadData()
+                this.isDialogVisible = false
+              })
+            }
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
+      // 删除数据
+      delData () {
+        deleteMenu({ id: this.form.id }).then(res => {
+          this.$message.success(res.message)
+          delete this.form.id
+          this.loadData()
+        })
       },
       handleCreateOne () {
+        this.dialogTitle = '新增一级索引'
+        this.form.pId = '0'
         this.isDialogVisible = true
-        console.log('新增一级索引')
       },
       handleCreate (index, row) {
-        console.log('新增 - index, row:', index, row)
+        this.dialogTitle = `新增${row.title}的子索引`
+        this.form.pId = row.id
+        this.isDialogVisible = true
       },
       handleEdit (index, row) {
-        console.log('编辑 - index, row:', index, row)
+        this.dialogTitle = `编辑索引：${row.title}`
+        fetchMenu({ id: row.id }).then(({ data }) => {
+          this.form = data
+          this.isDialogVisible = true
+        })
       },
       handleDelete (index, row) {
-        console.log('删除 - index, row:', index, row)
+        this.form.id = row.id
+        this.dialogTitle = `是否删除：${row.title}`
       },
       handleHasContent ({ id, hasContent }) {
         editMenu({ id, hasContent }) // 更新数据 hasContent 字段
       },
-      fetchMenuList () {
+      loadData () {
         return fetchMenuList().then(res => {
           this.menuList = res.data.menuList
         })
@@ -153,8 +204,12 @@
           cb(data)
         })
       },
-      handleSelect(item) {
-        this.form = Object.assign(this.form, item)
+      handleSelect({ articleId }) {
+        this.form.articleId = articleId
+      },
+      closeDialog () {
+        this.$refs.form.resetFields();
+        this.form = {...formData}
       }
     }
   }
