@@ -9,6 +9,8 @@ const requestInfoMiddleware = require('./middleware/info')
 
 log.level = 'info'
 
+require('./config/db') // 启动数据库
+
 app
   .use(bodyParser()) // http 实体中的数据解析到 koa 上下文中
   .use(respDurationMiddleware) // 计算服务器相应耗时
