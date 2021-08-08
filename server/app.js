@@ -6,8 +6,11 @@ const bodyParser = require('koa-bodyparser')
 const respDurationMiddleware = require('./middleware/duration')
 const respHeaderMiddleware = require('./middleware/header')
 const requestInfoMiddleware = require('./middleware/info')
+const mongoose = require('mongoose')
+mongoose.set('useFindAndModify', false)
 
 log.level = 'info'
+
 
 require('./config/db') // 启动数据库
 
