@@ -27,6 +27,27 @@ npm run dev
 ```
 
 ## 问题
+### 操作完数据库要 await，不然没有操作数据库？
+```js
+const menuDelete = {
+  method: 'delete',
+  path: '/menu/delete',
+  fn: async (ctx) => {
+    const { id } = ctx.request.query
+
+    try {
+      // TODO: 这里
+      const res = await Menu.deleteOne({ id })
+      ctx.response.body = utils.resBody({ message: '删除成功!' })
+    } catch (error) {
+      ctx.response.body = utils.resBody({
+        code: '50000',
+        message: error.message
+      })
+    }
+  }
+}
+```
 ### treeData函数有bug
 ### menu的删除功能，当删除的索引有children，如何处理？
 方案一：还有children的索引才可以删除
