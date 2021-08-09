@@ -190,7 +190,7 @@
       },
       loadData () {
         return fetchMenuList().then(res => {
-          this.menuList = res.data.menuList
+          this.menuList = res.data
         })
       },
       fetchArticleList (params) {
