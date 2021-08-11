@@ -1,13 +1,37 @@
 const utils = require('../utils/utils')
 const Counter = require('../models/counterSchema')
 
-// 查询 TODO: 不完善
+// 查询
 const query = (utils) => {
-  return (model) => {
-    return async (ctx, fn) => {
-      const res = await model.find({})
-      const data = fn ? fn(res, utils) : res
-      ctx.response.body = utils.resBody({ data })
+  return (model, fn) => {
+    return async (ctx) => {
+      try {
+        const { page, ...params } = ctx.request.body
+        let option = {}
+
+        // 分页参数
+        if (page) {
+          option = {
+            skip: (page.currentPage - 1) * page.pageSize,
+            limit: page.pageSize
+          }
+        }
+        // 数据库操作
+        const res = await model.find(
+          params, // 参数
+          { _id: 0, __v: 0 }, // 保护字段: 0 代表不查
+          option // 配置(分页)
+        )
+        // 数据特殊处理
+        const data = fn ? fn(res, utils) : res
+        // 响应给前端
+        ctx.response.body = utils.resBody({ data })
+      } catch (error) {
+        ctx.response.body = utils.resBody({
+          code: '50000',
+          message: error.message
+        })
+      }
     }
   }
 }
@@ -16,10 +40,17 @@ const query = (utils) => {
 const detail = (utils) => {
   return (model) => {
     return async (ctx) => {
-      const { id } = ctx.request.query
-      const res = await model.findOne({ id })
-      
-      ctx.response.body = utils.resBody({ data: res })
+      try {
+        const { id } = ctx.request.query
+        const res = await model.findOne({ id })
+        
+        ctx.response.body = utils.resBody({ data: res })
+      } catch (error) {
+        ctx.response.body = utils.resBody({
+          code: '50000',
+          message: error.message
+        })
+      }
     }
   }
 }
