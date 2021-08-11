@@ -32,7 +32,11 @@
     name: 'archive',
     async asyncData ({ $axios, route }) {
       let pageSize = 10
-      let res = await $axios.post('/api/article/list', { currentPage: parseInt(route.query.page), pageSize })
+      const page = {
+        pageSize,
+        currentPage: parseInt(route.query.page)
+      }
+      let res = await $axios.post('/api/article/list', { page })
       let articleList = res.data.data.data || []
       let currentPage = res.data.data.currentPage || 1
       let total = res.data.data.total || -1

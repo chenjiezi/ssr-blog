@@ -50,10 +50,10 @@
     </el-table>
 
     <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="listQuery.currentPage"
-      :limit.sync="listQuery.pageSize"
+      v-show="page.total>0"
+      :total="page.total"
+      :page.sync="page.currentPage"
+      :limit.sync="page.pageSize"
       @pagination="getData"
     />
   </div>
@@ -79,11 +79,12 @@ export default {
   data() {
     return {
       list: null,
-      total: 0,
       listLoading: true,
-      listQuery: {
+      listQuery: {},
+      page: {
         currentPage: 1,
-        pageSize: 10
+        pageSize: 10,
+        total: 0
       }
     }
   },
@@ -93,9 +94,13 @@ export default {
   methods: {
     getData() {
       this.listLoading = true
-      fetchList(this.listQuery).then(response => {
+      const params = {
+        ...this.listQuery,
+        page: this.page
+      }
+      fetchList(params).then(response => {
         this.list = response.data.data
-        this.total = response.data.total
+        this.page.total = response.data.total
       }).finally(() => {
         this.listLoading = false
       })
