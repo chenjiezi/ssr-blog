@@ -9,7 +9,7 @@ const menuList = { method: 'get', path: '/menu/list', fn: query(Menu, (res, util
 })}
 const menuDetail = { method: 'get', path: '/menu/detail', fn: detail(Menu) }
 const menuEdit = { method: 'put', path: '/menu/edit', fn: edit(Menu) }
-const menuCreate = { method: 'post', path: '/menu/create', fn: create(Menu) }
+const menuCreate = { method: 'post', path: '/menu/create', fn: create(Menu, 'menuId') }
 const menuDelete = { method: 'delete', path: '/menu/delete', fn: del(Menu) }
 
 module.exports = [
