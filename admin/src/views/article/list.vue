@@ -17,7 +17,7 @@
 
       <el-table-column width="180px" align="center" label="Date">
         <template slot-scope="scope">
-          <span>{{ scope.row.createTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ scope.row.createTime }}</span>
         </template>
       </el-table-column>
 
@@ -50,8 +50,8 @@
     </el-table>
 
     <pagination
-      v-show="page.total>0"
-      :total="page.total"
+      v-show="total>0"
+      :total="total"
       :page.sync="page.currentPage"
       :limit.sync="page.pageSize"
       @pagination="getData"
@@ -84,8 +84,8 @@ export default {
       page: {
         currentPage: 1,
         pageSize: 10,
+      },
         total: 0
-      }
     }
   },
   mounted() {
@@ -96,11 +96,11 @@ export default {
       this.listLoading = true
       const params = {
         ...this.listQuery,
-        page: this.page
+        ...this.page
       }
       fetchList(params).then(response => {
         this.list = response.data.data
-        this.page.total = response.data.total
+        this.total = response.data.total
       }).finally(() => {
         this.listLoading = false
       })
