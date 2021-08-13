@@ -198,9 +198,8 @@
           return res.data.data.map(({ id, title }) => ({ articleId: id, articleTitle: title }))
         })
       },
-      // TODO: 
-      querySearchAsync(queryString, cb) {
-        this.fetchArticleList({ queryString }).then(data => {
+      querySearchAsync(title, cb) {
+        this.fetchArticleList({ title }).then(data => {
           cb(data)
         })
       },
