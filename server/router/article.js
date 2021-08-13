@@ -4,7 +4,6 @@ const req = require('./handler-request')
 
 const { query, detail, create, edit, del } = req
 
-// TODO: 模糊查询功能未做
 const articleList = { method: 'get', path: '/article/list', fn: query(Article) }
 const articleDetail = { method: 'get', path: '/article/detail', fn: detail(Article) }
 const articleCreate = { method: 'post', path: '/article/create', fn: create(Article, 'articleId') }

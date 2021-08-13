@@ -7,28 +7,31 @@ const query = (utils) => {
     return async (ctx) => {
       try {
         const { currentPage, pageSize = 10, total, ...params } = ctx.request.query
-        let resData = {}, res
-        // 分页查询
+        let resData = {}, option = null
+        
+        // 查询条件（模糊）
+        let t = []
+        for (let [key, value] of Object.entries(params)) {
+          if (value) {
+            t.push({ [key]: { $regex: value, $options: '$i' } })
+          }
+        }
+
+        // 分页参数
         if (currentPage) {
-          let option = {}
           option = {
             skip: (currentPage - 1) * pageSize,
             limit: +pageSize
           }
-          res = await model.find(
-            params, // 参数
-            { _id: 0, __v: 0 }, // 保护字段: 0 代表不查
-            option
-          )
-
-          const total = await model.estimatedDocumentCount()
-          resData = { currentPage, pageSize, total }
-        } else {
-          res = await model.find(
-            params, // 参数
-            { _id: 0, __v: 0 } // 保护字段: 0 代表不查
-          )
+          const total = await model.countDocuments(t.length > 0 ? { $or: t } : {})
+          resData = { currentPage: +currentPage, pageSize: +pageSize, total }
         }
+
+        const res = await model.find(
+          t.length > 0 ? { $or: t } : {}, // 查询参数
+          { _id: 0, __v: 0 }, // 0 代表不查
+          option
+        )
 
         // 数据特殊处理
         resData.data = fn ? fn(res, utils) : res
