@@ -10,7 +10,8 @@ const articleSchema = mongoose.Schema({
     'status': String,
     'image_uri': String,
     'createTime': Date,
+    'updateTime': Date,
     'remark': String
-})
+}, { versionKey: false })
 
 module.exports = mongoose.model('article', articleSchema, 'article')
