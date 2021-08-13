@@ -67,6 +67,7 @@ const defaultForm = {
   content_short: '', // 文章摘要
   image_uri: '',     // 文章图片
   createTime: '',    // 文章创建时间
+  updateTime: '',    // 文章更新时间
   remark: '',        // 备注
   id: undefined,
 }
@@ -137,6 +138,8 @@ export default {
           this.postForm.status = 'published'
 
           if (this.postForm.id) { // 编辑文章的提交
+            this.postForm.updateTime = this.postForm.createTime
+            delete this.postForm.createTime
             editArticle(this.postForm).then(res => {
               this.$notify({
                 title: '成功',
@@ -147,6 +150,7 @@ export default {
               this.loading = false
             })
           } else { // 创建文章的提交
+            this.postForm.updateTime = this.postForm.createTime
             createArticle(this.postForm).then(res => {
               this.$notify({
                 title: '成功',
@@ -175,6 +179,8 @@ export default {
       }
       this.postForm.status = 'draft'
       if (this.postForm.id) { // 编辑文章的提交
+        this.postForm.updateTime = this.postForm.createTime
+        delete this.postForm.createTime
         editArticle(this.postForm).then(res => {
           this.$notify({
             title: '成功',
@@ -185,6 +191,7 @@ export default {
           this.loading = false
         })
       } else { // 创建文章的提交
+        this.postForm.updateTime = this.postForm.createTime
         createArticle(this.postForm).then(res => {
           this.$notify({
             title: '成功',
