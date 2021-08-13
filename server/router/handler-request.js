@@ -21,7 +21,7 @@ const query = (utils) => {
             option
           )
 
-          const total = await model.count()
+          const total = await model.estimatedDocumentCount()
           resData = { currentPage, pageSize, total }
         } else {
           res = await model.find(
