@@ -59,7 +59,6 @@
 import Tinymce from '@/components/Tinymce'
 import Upload from '@/components/Upload/SingleImage3'
 import MDinput from '@/components/MDinput'
-import MDeditor from '@/components/MDeditor'
 import Sticky from '@/components/Sticky' // 粘性header组件
 import { fetchArticle, createArticle, editArticle } from '@/api/article'
 
@@ -77,7 +76,7 @@ const defaultForm = {
 
 export default {
   name: 'ArticleDetail',
-  components: { Tinymce, MDinput, Upload, Sticky, MDeditor },
+  components: { Tinymce, MDinput, Upload, Sticky },
   props: {
     isEdit: {
       type: Boolean,
