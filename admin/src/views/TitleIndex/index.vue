@@ -52,7 +52,7 @@
             
           <el-popconfirm
             :title="dialogTitle"
-            @onConfirm="delData"
+            @confirm="delData"
           >
             <el-button
               size="mini"
