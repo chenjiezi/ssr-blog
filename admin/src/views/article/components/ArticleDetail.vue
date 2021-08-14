@@ -38,7 +38,9 @@
         </el-form-item>
 
         <el-form-item prop="content" style="margin-bottom: 30px;">
-          <Tinymce ref="editor" v-model="postForm.content" :height="400" />
+          <!-- <Tinymce ref="editor" v-model="postForm.content" :height="400" /> -->
+          <!-- <MDeditor ref="editor" v-model="postForm.content" height="420px"></MDeditor> -->
+          <mavon-editor v-model="postForm.content" @fullScreen="fullScreen" :style="{ 'height': this.height ? '500px' : 'auto' }"/>
         </el-form-item>
 
         <el-form-item prop="remark" label="备注" style="margin-bottom: 30px;">
@@ -57,6 +59,7 @@
 import Tinymce from '@/components/Tinymce'
 import Upload from '@/components/Upload/SingleImage3'
 import MDinput from '@/components/MDinput'
+import MDeditor from '@/components/MDeditor'
 import Sticky from '@/components/Sticky' // 粘性header组件
 import { fetchArticle, createArticle, editArticle } from '@/api/article'
 
@@ -74,7 +77,7 @@ const defaultForm = {
 
 export default {
   name: 'ArticleDetail',
-  components: { Tinymce, MDinput, Upload, Sticky },
+  components: { Tinymce, MDinput, Upload, Sticky, MDeditor },
   props: {
     isEdit: {
       type: Boolean,
@@ -94,6 +97,7 @@ export default {
       }
     }
     return {
+      height: true,
       postForm: Object.assign({}, defaultForm),
       loading: false,
       userListOptions: [],
@@ -116,6 +120,9 @@ export default {
     }
   },
   methods: {
+    fullScreen (isFullScreen) {
+      this.height = !isFullScreen
+    },
     fetchData(id) {
       fetchArticle(id).then(response => {
         this.postForm = response.data
@@ -128,7 +135,7 @@ export default {
     },
     setPageTitle() {
       const title = 'Edit Article'
-      document.title = `${title} - id：${this.postForm.id}`
+      // document.title = `${title} - id：${this.postForm.id}`
     },
     // 发布 published
     submitForm() {
