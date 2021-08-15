@@ -26,6 +26,9 @@ yarn install
 yarn serve
 ```
 
+## 功能点
+- [ ] anchor自动生成
+
 ## 问题
 ### 操作完数据库要 await，不然没有操作数据库？
 ```js
