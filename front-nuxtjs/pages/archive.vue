@@ -8,7 +8,7 @@
             <div class="title">
               <NuxtLink :to="'/post?id=' + article.id" >{{article.title}}</NuxtLink>
             </div>
-            <div class="date">{{article.dateTime}}</div>
+            <div class="date">{{article.createTime}}</div>
           </li>
         </ul>
         <!-- 分页 -->
@@ -32,11 +32,11 @@
     name: 'archive',
     async asyncData ({ $axios, route }) {
       let pageSize = 10
-      const page = {
+      const params = {
         pageSize,
         currentPage: parseInt(route.query.page)
       }
-      let res = await $axios.post('/api/article/list', { page })
+      let res = await $axios.get('/api/article/list', { params })
       let articleList = res.data.data.data || []
       let currentPage = res.data.data.currentPage || 1
       let total = res.data.data.total || -1
