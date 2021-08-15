@@ -22,8 +22,8 @@ npm run dev
 ### blog admin - admin文件夹
 
 ```bash
-npm install
-npm run dev
+yarn install
+yarn serve
 ```
 
 ## 问题
