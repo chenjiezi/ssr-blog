@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const articleSchema = mongoose.Schema({
     'id': String,
     'title': String,
+    'md_content': String,
     'content': String,
     'content_short': String,
     'path': String,

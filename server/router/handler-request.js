@@ -29,7 +29,7 @@ const query = (utils) => {
 
         const res = await model.find(
           t.length > 0 ? { $or: t } : {}, // 查询参数
-          { _id: 0, __v: 0 }, // 0 代表不查
+          { _id: 0, __v: 0, content: 0, md_content: 0 }, // 0 代表不查
           option
         )
 
