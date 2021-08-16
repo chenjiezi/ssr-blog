@@ -1,9 +1,21 @@
 const utils = require('../utils/utils')
 const Counter = require('../models/counterSchema')
-// TODO: 可以用柯里化函数优化
+
+function init (utils, Counter) {
+  return function (model) {
+    return {
+      query: query(utils, model),
+      detail: detail(utils, model),
+      create: create(utils, model, Counter),
+      edit: edit(utils, model),
+      del: del(utils, model),
+    }
+  }
+}
+
 // 查询
-const query = (utils) => {
-  return (model, fn) => {
+const query = (utils, model) => {
+  return (fn) => {
     return async (ctx) => {
       try {
         const { currentPage, pageSize = 10, total, ...params } = ctx.request.query
@@ -47,8 +59,8 @@ const query = (utils) => {
 }
 
 // 详情
-const detail = (utils) => {
-  return (model) => {
+const detail = (utils, model) => {
+  return () => {
     return async (ctx) => {
       try {
         const { id } = ctx.request.query
@@ -66,8 +78,8 @@ const detail = (utils) => {
 }
 
 // 新增
-const create = (utils, Counter) => {
-  return (model, modelId) => {
+const create = (utils, model, Counter) => {
+  return (modelId) => {
     return async (ctx) => {
       const menuData = ctx.request.body
 
@@ -107,8 +119,8 @@ const create = (utils, Counter) => {
 }
 
 // 编辑
-const edit = (utils) => {
-  return (model) => {
+const edit = (utils, model) => {
+  return () => {
     return async (ctx) => {
       const data = ctx.request.body
 
@@ -126,8 +138,8 @@ const edit = (utils) => {
 }
 
 // 删除
-const del = (utils) => {
-  return (model) => {
+const del = (utils, model) => {
+  return () => {
     return async (ctx) => {
       const { id } = ctx.request.query
 
@@ -144,10 +156,4 @@ const del = (utils) => {
   }
 }
 
-module.exports = {
-  detail: detail(utils),
-  edit: edit(utils),
-  del: del(utils),
-  create: create(utils, Counter),
-  query: query(utils)
-}
+module.exports = init(utils, Counter)

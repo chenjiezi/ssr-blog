@@ -1,16 +1,16 @@
 const Menu = require('../models/menuSchema')
 const req = require('./handler-request')
 
-const { query, create, detail, edit, del } = req
+const { query, create, detail, edit, del } = req(Menu)
 
-const menuList = { method: 'get', path: '/menu/list', fn: query(Menu, (res, utils) => {
+const menuList = { method: 'get', path: '/menu/list', fn: query((res, utils) => {
   const cloneData = JSON.parse(JSON.stringify(res))
   return utils.treeData(cloneData) // 转成树结构
 })}
-const menuDetail = { method: 'get', path: '/menu/detail', fn: detail(Menu) }
-const menuEdit = { method: 'put', path: '/menu/edit', fn: edit(Menu) }
-const menuCreate = { method: 'post', path: '/menu/create', fn: create(Menu, 'menuId') }
-const menuDelete = { method: 'delete', path: '/menu/delete', fn: del(Menu) }
+const menuDetail = { method: 'get', path: '/menu/detail', fn: detail() }
+const menuEdit = { method: 'put', path: '/menu/edit', fn: edit() }
+const menuCreate = { method: 'post', path: '/menu/create', fn: create('menuId') }
+const menuDelete = { method: 'delete', path: '/menu/delete', fn: del() }
 
 module.exports = [
   menuList,

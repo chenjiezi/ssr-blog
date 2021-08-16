@@ -2,14 +2,13 @@ const utils = require('../utils/utils')
 const Article = require('../models/articleSchema')
 const req = require('./handler-request')
 
-const { query, detail, create, edit, del } = req
+const { query, detail, create, edit, del } = req(Article)
 
-// TODO: 模糊查询功能未做
-const articleList = { method: 'get', path: '/article/list', fn: query(Article) }
-const articleDetail = { method: 'get', path: '/article/detail', fn: detail(Article) }
-const articleCreate = { method: 'post', path: '/article/create', fn: create(Article, 'articleId') }
-const articleEdit = { method: 'put', path: '/article/edit', fn: edit(Article) }
-const articleDelete = { method: 'delete', path: '/article/delete', fn: del(Article) }
+const articleList = { method: 'get', path: '/article/list', fn: query() }
+const articleDetail = { method: 'get', path: '/article/detail', fn: detail() }
+const articleCreate = { method: 'post', path: '/article/create', fn: create('articleId') }
+const articleEdit = { method: 'put', path: '/article/edit', fn: edit() }
+const articleDelete = { method: 'delete', path: '/article/delete', fn: del() }
 
 module.exports = [
   articleList,
