@@ -11,15 +11,14 @@ mongoose.set('useFindAndModify', false)
 
 log.level = 'info'
 
-
-require('./config/db') // 启动数据库
+require('./config/db')            // 启动数据库
 
 app
-  .use(bodyParser()) // http 实体中的数据解析到 koa 上下文中
-  .use(respDurationMiddleware) // 计算服务器相应耗时
-  .use(respHeaderMiddleware) // 设置响应头部header
-  .use(requestInfoMiddleware) // 打印请求信息
-  .use(router.routes()) // 注册路由
+  .use(bodyParser())              // http 实体中的数据解析到 koa 上下文中
+  .use(respDurationMiddleware)    // 计算服务器相应耗时
+  .use(respHeaderMiddleware)      // 设置响应头部header
+  .use(requestInfoMiddleware)     // 打印请求信息
+  .use(router.routes())           // 注册路由
   .use(router.allowedMethods())
 
 
