@@ -38,7 +38,9 @@
         </el-form-item>
 
         <el-form-item prop="content" style="margin-bottom: 30px;">
-          <Tinymce ref="editor" v-model="postForm.content" :height="400" />
+          <!-- <Tinymce ref="editor" v-model="postForm.content" :height="400" /> -->
+          <!-- <MDeditor ref="editor" v-model="postForm.content" height="420px"></MDeditor> -->
+          <mavon-editor v-model="postForm.md_content" @change="onChange" @fullScreen="fullScreen" :style="{ 'height': this.height ? '500px' : 'auto' }"/>
         </el-form-item>
 
         <el-form-item prop="remark" label="备注" style="margin-bottom: 30px;">
@@ -63,10 +65,12 @@ import { fetchArticle, createArticle, editArticle } from '@/api/article'
 const defaultForm = {
   status: 'draft',
   title: '',         // 文章题目
-  content: '',       // 文章内容
+  md_content: '',    // 文章内容（markdown格式）
+  content: '',       // 文章内容（html格式）
   content_short: '', // 文章摘要
   image_uri: '',     // 文章图片
   createTime: '',    // 文章创建时间
+  updateTime: '',    // 文章更新时间
   remark: '',        // 备注
   id: undefined,
 }
@@ -93,6 +97,7 @@ export default {
       }
     }
     return {
+      height: true,
       postForm: Object.assign({}, defaultForm),
       loading: false,
       userListOptions: [],
@@ -115,6 +120,9 @@ export default {
     }
   },
   methods: {
+    fullScreen (isFullScreen) {
+      this.height = !isFullScreen
+    },
     fetchData(id) {
       fetchArticle(id).then(response => {
         this.postForm = response.data
@@ -127,7 +135,7 @@ export default {
     },
     setPageTitle() {
       const title = 'Edit Article'
-      document.title = `${title} - id：${this.postForm.id}`
+      // document.title = `${title} - id：${this.postForm.id}`
     },
     // 发布 published
     submitForm() {
@@ -137,6 +145,8 @@ export default {
           this.postForm.status = 'published'
 
           if (this.postForm.id) { // 编辑文章的提交
+            this.postForm.updateTime = this.postForm.createTime
+            delete this.postForm.createTime
             editArticle(this.postForm).then(res => {
               this.$notify({
                 title: '成功',
@@ -147,6 +157,7 @@ export default {
               this.loading = false
             })
           } else { // 创建文章的提交
+            this.postForm.updateTime = this.postForm.createTime
             createArticle(this.postForm).then(res => {
               this.$notify({
                 title: '成功',
@@ -175,6 +186,8 @@ export default {
       }
       this.postForm.status = 'draft'
       if (this.postForm.id) { // 编辑文章的提交
+        this.postForm.updateTime = this.postForm.createTime
+        delete this.postForm.createTime
         editArticle(this.postForm).then(res => {
           this.$notify({
             title: '成功',
@@ -185,6 +198,7 @@ export default {
           this.loading = false
         })
       } else { // 创建文章的提交
+        this.postForm.updateTime = this.postForm.createTime
         createArticle(this.postForm).then(res => {
           this.$notify({
             title: '成功',
@@ -196,6 +210,9 @@ export default {
         })
       }
       this.$router.push('/list')
+    },
+    onChange (value, render) {
+      this.postForm.content = render
     }
   }
 }

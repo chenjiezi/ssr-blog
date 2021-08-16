@@ -62,7 +62,7 @@
     beforeMount () {
       // 获取文章目录列表
       this.$axios.get('/api/menu/list').then(res => {
-        let data = res?.data?.data?.menuList || []
+        let data = res?.data?.data?.data || []
         this.treeData = handleData(data)
         
         // TODO:初始化目录当前节点高亮
@@ -95,8 +95,8 @@
 
         // 重定向路由
         if (dataRef.hasContent) {
-          if (this.$route.query.title !== dataRef.key) {
-            window.location.href = '/post?id=' + dataRef.id
+          if (this.$route.query.id !== dataRef.articleId) {
+            window.location.href = '/post?id=' + dataRef.articleId
           }
         }
         

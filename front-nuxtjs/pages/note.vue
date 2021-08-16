@@ -72,8 +72,8 @@
     components: { Menu },
     name: 'note',
     async asyncData ({ $axios }) {
-      const res =  await $axios.get('/api/menu')
-      const menuList = res.data.data.menuList || []
+      const res =  await $axios.get('/api/menu/list')
+      const menuList = res.data.data.data || []
       const contentHtml = menuList.length > 0 ? noteContentRender(menuList) : ''
       return  {
         contentHtml
@@ -95,5 +95,7 @@
       background-color #fff
       .content
         padding 12px
-        background rgba(0,0,0,.05)
+        font-size: 16px;
+        color: #333;
+        background: rgba(0,0,0,.02);
 </style>
